@@ -61,8 +61,8 @@ window.onload = function init()
     verticalBands = new VerticalBands();
     softBands = new SoftBands();
     gradient = new Gradient();
-    imageTexture = new ImageTexture("textures/BB8.jpg"); //head
-    imageTexture2 = new ImageTexture("textures/bb8_texture.jpg"); //body
+    headTexture = new ImageTexture("textures/bb8s.jpg"); //head
+    bodyTexture2 = new ImageTexture("textures/bb8_texture.jpg"); //body
     stripes = new Stripes();
 
     light.positionY(0);
