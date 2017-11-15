@@ -74,9 +74,9 @@ function SemiSphere(num_sides) { //start with disks instead of cylinders
 
             //texcoords
             var angle = ((360/num_sides) *i)/360;
-            var angle2 = ((360/num_sides) *j)/360;
+//            var angle2 = ((360/num_sides) *j)/360 + 90;
             
-            t1 = vec2(angle, angle2);
+            t1 = vec2(angle, 0.5);
 
             this.vertices.push(p1, p2, p3, p4, p5, p6);
             this.colors.push(color1, color2, color3, color1, color2, color3);

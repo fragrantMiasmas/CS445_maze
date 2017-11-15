@@ -193,10 +193,12 @@ Camera.prototype.keyAction = function (key) {
         case 'Q':  // move forward
             console.log("move forward");
             this.eye = subtract(this.eye, this.viewRotation[2]); //subtract the n vector from eye position.
+            thetaX -= 5; //pedal rotation
             break;
         case 'A':  //  move backward
             console.log("move backward");
             this.eye = add(this.eye, this.viewRotation[2]); //subtract the n vector from eye position.
+            thetaX += 5; //pedal rotation
             break;
         case 'R':  //  reset
             console.log("reset");

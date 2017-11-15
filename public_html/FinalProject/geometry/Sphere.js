@@ -69,7 +69,7 @@ function Sphere(num_sides) { //start with disks instead of cylinders
             var angle = ((360/num_sides) *i)/360;
             var angle2 = ((360/num_sides) *j)/360;
             
-            t1 = vec2(angle, angle2);
+            t1 = vec2(angle2, angle);
         
             this.vertices.push(p1, p2, p3, p4, p5, p6);
             this.colors.push(color1, color2, color3, color1, color2, color3);

@@ -112,4 +112,14 @@ function setKeyEventHandler() {
         render();
     };
 }
-
+//function rotY() {
+//    slider = document.getElementById("slider");
+//    slider.addEventListener("input", function (e) {
+//        var raw_val = document.getElementById("slider").value;
+//        var val = parseInt(raw_val);
+//        light1.positionY(val);
+////        console.log("Event Handler" + val);
+//        render();
+//
+//    });
+//};

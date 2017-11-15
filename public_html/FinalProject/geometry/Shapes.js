@@ -12,8 +12,8 @@ Shapes.cube = new Cube();  // global
 Shapes.disk = new Disk(36);
 Shapes.cone = new Cone(36, 1);
 Shapes.cylinder = new Cylinder(48, 0.5);
-Shapes.sphere = new Sphere(36);
-Shapes.semisphere = new SemiSphere(36);
+Shapes.sphere = new Sphere(300);
+Shapes.semisphere = new SemiSphere(100);
 Shapes.axis = new Axis();
 
 Shapes.initShapes = function () {
