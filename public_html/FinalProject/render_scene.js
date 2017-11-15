@@ -59,10 +59,11 @@ window.onload = function init()
     gradient = new Gradient();
     imageTexture2 = new ImageTexture("textures/test.jpg");
     
-    light.positionY(0); //takes in rotation about y axis, sets light position
+    light.positionY(0);
     light.setUp();
     
     render();
+
 };
 
 /**
@@ -100,68 +101,33 @@ function render()
 {
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
+    //Left half of viewport
     var projMat = camera.calcProjectionMat();   // Projection matrix  
     gl.uniformMatrix4fv(uProjection, false, flatten(projMat));
-    
     var viewMat = camera.calcViewMat();   // View matrix
+    gl.viewport(0,0,canvas.width/2, canvas.height); //x,y,width,height
+    render1(viewMat);
+    
+    //Right half of viewport
+    projMat = ortho(-10, 10, -10, 10, 1, 1000); //ortho(left,right,bottom,top,near,far)
+    gl.uniformMatrix4fv(uProjection,false,flatten(projMat));
+    viewMat = lookAt(vec3(0,10,0), vec3(0,0,0), vec3(1,0,0)); // lookAt(eye,at,up)
+    gl.viewport(canvas.width/2,0,canvas.width/2,canvas.height);
+    render1(viewMat);
+    
+}
+
+function render1(vm){
     
     //////////
-    var newLightPos = mult(viewMat, mult(rotateY(lightAngle),light.light_position));
+    var newLightPos = mult(vm, mult(rotateY(lightAngle),light.light_position));
     gl.uniform4fv(uLight_position, newLightPos);
     /////////
-
     stack.clear();
-    stack.multiply(viewMat); 
+    stack.multiply(vm); 
     
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     Shapes.axis.draw();
-    
-    //Draw cube
-    stack.push();
-    stack.multiply(translate(-6,1,0));
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    gl.uniform1i(uColorMode, 0); //vertex color mode
-    Shapes.drawPrimitive(Shapes.cube);
-    stack.pop();
-    
-    //Draw cylinder
-    stack.push();
-    stack.multiply(translate(3,1,0));
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    checkerboard.activate();
-    gl.uniform1i(uColorMode, 2);
-    Shapes.drawPrimitive(Shapes.cylinder);
-    stack.pop();
-    
-    //Draw disk
-    stack.push();
-    stack.multiply(translate(0,0.5,3));
-    stack.multiply(rotateX(90));
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    gl.uniform4fv(uColor, vec4(0,1,0,1));
-    gl.uniform1i(uColorMode, 1); //uniform color mode
-    Shapes.drawPrimitive(Shapes.disk);
-    stack.pop();
-    
-    
-    //Draw cone
-    stack.push();
-    stack.multiply(translate(-3,1.5,0));
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    gl.uniform1i(uColorMode, 3); //shader color mode
-    Shapes.drawPrimitive(Shapes.cone);
-    stack.pop();
-
-    //draw train.
-    stack.push();
-    var train = new Train();
-    softBands.activate();
-    gl.uniform1i(uColorMode, 2); //texture color mode
-    train.drawTrain();
-    stack.pop();
-
-    stack.clear(); //reclear stack because of some weird stack pushing issue in train.js
-    stack.multiply(viewMat);    
 
     //draw floor 
     stack.push();
@@ -184,4 +150,5 @@ function render()
     Shapes.drawPrimitive(Shapes.cube);
     stack.pop();
 }
+
 

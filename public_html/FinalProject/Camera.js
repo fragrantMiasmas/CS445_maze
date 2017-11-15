@@ -76,7 +76,7 @@ Camera.prototype.calcViewMat = function () {
  * @return the projection matrix
  */
 Camera.prototype.calcProjectionMat = function () {
-    aspect = canvas.width / canvas.height;
+    aspect = 0.5*canvas.width / canvas.height;
     return perspective(this.fov, aspect, this.zNear, this.zFar);
 };
 
