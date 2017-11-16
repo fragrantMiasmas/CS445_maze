@@ -36,7 +36,7 @@ function Lighting() {
 Lighting.prototype.positionY = function(thetaY){ //set light position
     //takes an input from slider to calculate x,z 
     this.x_pos = Math.cos(thetaY)*6; //radius of 6 about origin
-    this.y_pos =10;
+    this.y_pos = 6;
     this.z_pos = Math.sin(thetaY)*6;
     
     this.light_position = vec4(this.x_pos, this.y_pos, this.z_pos, 1); 

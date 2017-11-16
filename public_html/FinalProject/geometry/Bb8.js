@@ -21,7 +21,6 @@ Bb8.prototype.drawHead = function(){
 
 Bb8.prototype.drawBody = function(){
     stack.push();
-//    stack.multiply(translate(0,this.bodyWidth,0));
     stack.multiply(scalem(this.bodyWidth,this.bodyWidth,this.bodyWidth)); 
     Shapes.drawPrimitive(Shapes.sphere, { transform: stack.top (), color: this.bodyTexture.activate() }); 
     gl.uniform1i(uColorMode, 2);
@@ -33,5 +32,6 @@ Bb8.prototype.drawBb8 = function(){
     stack.multiply(translate(0,this.bodyWidth,0));
     this.drawHead();
     stack.multiply(rotateX(thetaX));
+    stack.multiply(rotateY(thetaX));
     this.drawBody();
 }

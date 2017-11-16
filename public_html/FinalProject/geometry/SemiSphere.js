@@ -63,9 +63,10 @@ function SemiSphere(num_sides) { //start with disks instead of cylinders
 
 
             //normals
-            var percentage = (2 * Math.PI * i) / num_sides;
-            var percentage2 = (2 * Math.PI * ((i + 1) % num_sides)) / num_sides;
+            var percentage = (2 * Math.PI * j) / num_sides;
+            var percentage2 = (2 * Math.PI * ((j + 1) % num_sides)) / num_sides;
             var ypercent = (i * 3 * Math.PI / 2) / num_cylinders;
+            
             var ynorm = Math.cos(ypercent);
             var norm = vec4(Math.cos(percentage), ynorm, Math.sin(percentage), 0); //bottom disk normal
             var norm2 = vec4(Math.cos(percentage2), ynorm, Math.sin(percentage), 0); //bottom disk normal

@@ -17,6 +17,7 @@ var uModel_view;  //  shader uniform variable for model-view matrix
 var uTexture;
 var thetaX = 0; //for rotating the pedals of unicycle and sphere
 
+
 var camera = new Camera();
 var stack = new MatrixStack();
 var light = new Lighting();
@@ -61,8 +62,8 @@ window.onload = function init()
     verticalBands = new VerticalBands();
     softBands = new SoftBands();
     gradient = new Gradient();
-    headTexture = new ImageTexture("textures/bb8s.jpg"); //head
-    bodyTexture2 = new ImageTexture("textures/bb8_texture.jpg"); //body
+    headTexture = new ImageTexture("textures/bb8_head.jpg"); //head
+    bodyTexture2 = new ImageTexture("textures/bbb81.png"); //body
     stripes = new Stripes();
 
     light.positionY(0);
