@@ -12,7 +12,7 @@ Shapes.cube = new Cube();  // global
 Shapes.disk = new Disk(36);
 Shapes.cone = new Cone(36, 1);
 Shapes.cylinder = new Cylinder(48, 0.5);
-Shapes.sphere = new Sphere(300);
+Shapes.sphere = new Sphere(500);
 Shapes.semisphere = new SemiSphere(100);
 Shapes.axis = new Axis();
 

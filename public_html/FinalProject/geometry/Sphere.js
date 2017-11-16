@@ -25,7 +25,7 @@ function Sphere(num_sides) { //start with disks instead of cylinders
         var percent1 = (i* 3 * Math.PI/2)/ num_cylinders; //cos(pi/2) = 0
         
         //fixes an error where y value repeats after reaching -1
-        var percent = percent1 * (3/4);
+        var percent = percent1 * (2/3);
         var radius = Math.sin(percent); //beginning point should = (0,1) 
         var  yval = Math.cos(percent);
 

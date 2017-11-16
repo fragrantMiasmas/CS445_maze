@@ -64,6 +64,7 @@ window.onload = function init()
     gradient = new Gradient();
     headTexture = new ImageTexture("textures/bb8_head.jpg"); //head
     bodyTexture2 = new ImageTexture("textures/bbb81.png"); //body
+//     bodyTexture2 = new Checkerboard(); //body
     stripes = new Stripes();
 
     light.positionY(0);
@@ -174,4 +175,13 @@ function drawScene() {
     stack.pop();
     
     //more shapes
+     stack.push();
+
+    stack.multiply(translate(-3, 3, 2));
+//    stack.multiply(scalem(0.5, 0.5, 0.5));
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()))
+    gradient.activate();
+    gl.uniform1i(uColorMode, 2); //texture color mode
+    Shapes.drawPrimitive(Shapes.sphere);
+    stack.pop();
 }
