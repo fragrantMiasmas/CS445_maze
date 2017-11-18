@@ -3,22 +3,65 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function Node(val1, val2, val3, val4, pri){
-    this.value1 = val1;
-    this.value2 = val2;
-    this.value3 = val3;
-    this.value4 = val4;
+function Node(nR, nC){
+    this.row = nR;
+    this.col = nC;
     
-    this.priority = pri;
+    this.topRow = nR-2;
+    
+    this.rightCol = nC +2;
+    
+    this.botRow = nR+2;
+    
+    this.leftCol = nC-2;
+    
+    this.path = 0;
+    this.visit = 0;
+    
+    
+    //this.priority = pri;
 }
 
-Node.prototype.getUnit1 = function(){
-    return [this.value1, this.value2];
+Node.prototype.getRow = function(){
+    return this.row;
 };
 
-Node.prototype.getUnit2 = function(){
-    return [this.value3, this.value4];
+Node.prototype.getCol = function(){
+    return this.col;
+};
+
+Node.prototype.getTopRow = function(){
+    return this.topRow;
 };
 
 
+Node.prototype.getRightCol = function(){
+    return this.rightCol;
+};
 
+
+Node.prototype.getBotRow = function(){
+    return this.botRow;
+};
+
+
+Node.prototype.getLeftCol = function(){
+    return this.leftCol;
+};
+
+
+Node.prototype.isPath = function(){
+    return this.path;
+};
+
+Node.prototype.isVisit = function(){
+    return this.visit;
+};
+
+Node.prototype.setPath = function(){
+    this.path = 1;
+};
+
+Node.prototype.setVisit = function(){
+    this.visit = 1;
+};

@@ -33,6 +33,8 @@ var stripes;
 
 var lightAngle = 0;
 
+var mazegen = new MazeGen(9);
+
 var program;
 
 window.onload = function init()
