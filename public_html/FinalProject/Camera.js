@@ -13,7 +13,8 @@ function Camera() {
     this.zFar = 500;         // camera's near plane
 
 // Camera *initial* location and orientation parameters
-    this.eye_start = vec4([0, 4, 25, 1]); // initial camera location (needed for reseting)   
+//change starting point to maze, may need to adjust uvn?
+    this.eye_start = vec4([0, 4, 20, 1]); // initial camera location (needed for reseting)   
     this.VPN = vec4([0, 0, 1, 0]);  // used to initialize uvn
     this.VUP = vec4([0, 1, 0, 0]);  // used to initialize uvn  
 

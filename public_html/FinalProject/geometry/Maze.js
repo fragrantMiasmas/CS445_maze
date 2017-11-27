@@ -10,6 +10,7 @@
 function Maze(s) {
     mazegen = new MazeGen(s);
     this.name = "maze";
+    this.width = 15; //so that it stays within camera space
 }
 
 Maze.prototype.drawMaze = function () {
@@ -84,6 +85,20 @@ Maze.prototype.drawMaze = function () {
     gl.uniform1i(uColorMode, 1);
     Shapes.drawPrimitive(Shapes.cube);
     stack.pop();
+    
+    //roof if checkbox is not checked, note that it's kind of slow
+    var check = document.getElementById("showMaze").checked;
+    if (!check) {
+        stack.push();
+        stack.multiply(translate(0, 3, 0));
+        stack.multiply(scalem(mazegen.gridSize + 1, 0.2, mazegen.gridSize + 1));
+        gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+        gl.uniform4fv(uColor, vec4(0, 1, 0, 1));
+        gl.uniform1i(uColorMode, 1);
+        Shapes.drawPrimitive(Shapes.cube);
+        stack.pop();
+    }
+    
 };
 
 

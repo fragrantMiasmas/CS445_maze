@@ -165,35 +165,27 @@ function render1(vm) {
     Shapes.drawPrimitive(Shapes.cube);
     stack.pop();
 
-    //draw maze
+}
+
+function drawScene() {
+    var width = Shapes.maze.width;
+    
+    
+    //bb8
+    stack.push();
+    var bb8 = new Bb8();
+//    stack.multiply(translate(2, 0, -2));
+    stack.multiply(scalem(0.2, 0.2, 0.2));
+    bb8.drawBb8();
+    stack.pop();
+
+       //draw maze
     stack.push();
     //stack.multiply(translate(0,1.5,0));
-//    stack.multiply(scalem(1,3,1));
+    stack.multiply(scalem(width/mazegen.gridSize, 1, width/mazegen.gridSize));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);
     Shapes.maze.drawMaze();
-    stack.pop();
-
-}
-
-function drawScene() {
-    //bb8
-    stack.push();
-    var bb8 = new Bb8();
-    stack.multiply(translate(2, 0, -2));
-    stack.multiply(scalem(0.5, 0.5, 0.5));
-    bb8.drawBb8();
-    stack.pop();
-
-    //more shapes
-    stack.push();
-
-    stack.multiply(translate(-3, 3, 2));
-//    stack.multiply(scalem(0.5, 0.5, 0.5));
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()))
-    gradient.activate();
-    gl.uniform1i(uColorMode, 2); //texture color mode
-    Shapes.drawPrimitive(Shapes.sphere);
     stack.pop();
 }
