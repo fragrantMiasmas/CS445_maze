@@ -33,7 +33,7 @@ var stripes;
 
 var lightAngle = 0;
 
-var mazegen = new MazeGen(9);
+//var mazegen = new MazeGen(21);
 
 var program;
 
@@ -145,14 +145,14 @@ function render1(vm) {
     stack.pop();
 
     //draw floor 
-    stack.push();
-    stack.multiply(translate(0, -0.05, 0));
-    stack.multiply(scalem(10, .1, 10));
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    gradient.activate();
-    gl.uniform1i(uColorMode, 2); //texture color mode
-    Shapes.drawPrimitive(Shapes.cube);
-    stack.pop();
+//    stack.push();
+//    stack.multiply(translate(0, -0.05, 0));
+//    stack.multiply(scalem(10, .1, 10));
+//    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+//    gradient.activate();
+//    gl.uniform1i(uColorMode, 2); //texture color mode
+//    Shapes.drawPrimitive(Shapes.cube);
+//    stack.pop();
 
     //draw light cube
     stack.push();
@@ -165,6 +165,16 @@ function render1(vm) {
     Shapes.drawPrimitive(Shapes.cube);
     stack.pop();
 
+    //draw maze
+    stack.push();
+    //stack.multiply(translate(0,1.5,0));
+//    stack.multiply(scalem(1,3,1));
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
+    gl.uniform1i(uColorMode, 1);
+    Shapes.maze.drawMaze();
+    stack.pop();
+
 }
 
 function drawScene() {
@@ -175,9 +185,9 @@ function drawScene() {
     stack.multiply(scalem(0.5, 0.5, 0.5));
     bb8.drawBb8();
     stack.pop();
-    
+
     //more shapes
-     stack.push();
+    stack.push();
 
     stack.multiply(translate(-3, 3, 2));
 //    stack.multiply(scalem(0.5, 0.5, 0.5));
