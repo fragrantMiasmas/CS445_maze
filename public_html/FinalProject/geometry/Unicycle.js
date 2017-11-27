@@ -104,6 +104,7 @@ Unicycle.prototype.addPedals = function(){
 }
 Unicycle.prototype.drawUnicycle = function(){ //put it all together
     stack.push();
+    stack.multiply(translate(0,0,distance));
     this.drawSeat();
 //    console.log("HERe!!");
     this.drawRods(); 

@@ -16,7 +16,7 @@ var uProjection;  //  shader uniform variable for projection matrix
 var uModel_view;  //  shader uniform variable for model-view matrix
 var uTexture;
 var thetaX = 0; //for rotating the pedals of unicycle and sphere
-
+var distance = 0; //moving ovjects independently
 
 var camera = new Camera();
 var stack = new MatrixStack();
@@ -175,6 +175,7 @@ function drawScene() {
     stack.push();
     var bb8 = new Bb8();
 //    stack.multiply(translate(2, 0, -2));
+    stack.multiply(translate(0,0,distance));
     stack.multiply(scalem(0.2, 0.2, 0.2));
     bb8.drawBb8();
     stack.pop();

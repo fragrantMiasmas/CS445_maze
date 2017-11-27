@@ -205,5 +205,14 @@ Camera.prototype.keyAction = function (key) {
             console.log("reset");
             this.reset();
             break;
+         case 'M':  // move object forward
+           thetaX -= 5; //pedal rotation);
+           distance -=1;
+            break;
+         case 'N':  // move object backward
+           thetaX += 5; //pedal rotation
+           distance +=1;
+//           stack.multiply(translate(0, 0, distance));
+            break;
     }
 };
