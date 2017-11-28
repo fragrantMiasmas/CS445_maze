@@ -1,6 +1,6 @@
 function Stairs(){
     this.name = "Stairs";
-    this.location = vec4(0,0,0,1); //change later
+//    this.location = MazeGen.startRow; //change later
     this.height = 6;
     this.width = 2;
     this.depth = 2/3 * this.width; //of each step
