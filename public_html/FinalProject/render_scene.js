@@ -16,7 +16,8 @@ var uProjection;  //  shader uniform variable for projection matrix
 var uModel_view;  //  shader uniform variable for model-view matrix
 var uTexture;
 var thetaX = 0; //for rotating the pedals of unicycle and sphere
-var distance = 0; //moving ovjects independently
+var distance = 2*Math.PI * thetaX/360; //moving ovjects independently
+var distance2 = 2*Math.PI * thetaX/360; 
 
 var camera = new Camera();
 var stack = new MatrixStack();
@@ -144,15 +145,6 @@ function render1(vm) {
     drawScene();
     stack.pop();
 
-    //draw floor 
-//    stack.push();
-//    stack.multiply(translate(0, -0.05, 0));
-//    stack.multiply(scalem(10, .1, 10));
-//    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-//    gradient.activate();
-//    gl.uniform1i(uColorMode, 2); //texture color mode
-//    Shapes.drawPrimitive(Shapes.cube);
-//    stack.pop();
 
     //draw light cube
     stack.push();
@@ -176,17 +168,41 @@ function drawScene() {
     var bb8 = new Bb8();
 //    stack.multiply(translate(2, 0, -2));
     stack.multiply(translate(0,0,distance));
+    stack.multiply(translate(distance2,0,0));
     stack.multiply(scalem(0.2, 0.2, 0.2));
     bb8.drawBb8();
     stack.pop();
 
        //draw maze
     stack.push();
-    //stack.multiply(translate(0,1.5,0));
     stack.multiply(scalem(width/mazegen.gridSize, 1, width/mazegen.gridSize));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);
     Shapes.maze.drawMaze();
+    stack.pop();
+    
+    //stairs
+    stack.push();
+    var stair = new Stairs();
+    stack.multiply(translate(0,3,0));
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
+    gl.uniform1i(uColorMode, 1);
+    stair.drawSteps();
+    stack.pop();
+    
+      //level 2
+    stack.push();
+      //alternative way of declaring maze so that each level is different 
+      //need to solve problem of maze changing with each key stroke
+//    var maze2 = new Maze(18);
+    stack.multiply(translate(0,8,0));
+    stack.multiply(scalem(width/mazegen.gridSize, 1, width/mazegen.gridSize));
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
+    gl.uniform1i(uColorMode, 1);
+    //drawMaze not the same as drawPrimitive
+    Shapes.maze2.drawMaze(); //need to change so that the two mazes are different
     stack.pop();
 }

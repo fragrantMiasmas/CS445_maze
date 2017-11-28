@@ -1,5 +1,5 @@
 
-function Sphere(num_sides) { //start with disks instead of cylinders
+function Sphere(num_sides) { 
 
     this.name = "Sphere";
     var num_cylinders = num_sides;
@@ -53,20 +53,15 @@ function Sphere(num_sides) { //start with disks instead of cylinders
             p5 = outside_vertices[(i+1)% num_sides][j]; //norm2
             p6 = outside_vertices[(i+1)% num_sides][(j + 1) % num_sides]; //norm4
             
-        var percentage = (2*Math.PI *j)/num_sides;
-        var percentage2 = (2*Math.PI *((j+1) % num_sides))/num_sides;
-        
-        //note: w val is 0 for normals
-        var ypercent = (i* 3 * Math.PI/2)/ num_cylinders;
-        var ynorm = Math.cos(ypercent);
-        var norm = vec4(Math.cos(percentage),ynorm,Math.sin(percentage),0); //bottom disk normal
-        var norm2 = vec4(Math.cos(percentage2),ynorm,Math.sin(percentage),0); //bottom disk normal
-        var norm3 = vec4(Math.cos(percentage),ynorm,Math.sin(percentage2),0); //bottom disk normal
-        var norm4 = vec4(Math.cos(percentage2),ynorm,Math.sin(percentage2),0); //bottom disk normal
+             //note: w val is 0 for normals
+            var norm = normalize(p1.slice(0, 3)).concat(0);
+            var norm2 = normalize(p2.slice(0, 3)).concat(0);
+            var norm3 = normalize(p3.slice(0, 3)).concat(0);
+            var norm4 = normalize(p6.slice(0, 3)).concat(0);
 
 
-        //texcoords
-            var angle = ((360/num_sides) *i)/360;
+            //texcoords
+            var angle = ((360 / num_sides) *i)/360;
             var angle2 = ((360/num_sides) *j)/360;
             
             t1 = vec2(angle2, angle);

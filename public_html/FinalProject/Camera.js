@@ -207,12 +207,20 @@ Camera.prototype.keyAction = function (key) {
             break;
          case 'M':  // move object forward
            thetaX -= 5; //pedal rotation);
-           distance -=1;
+           distance -= 0.5;
             break;
          case 'N':  // move object backward
            thetaX += 5; //pedal rotation
-           distance +=1;
+           distance += 0.5;
 //           stack.multiply(translate(0, 0, distance));
+            break;
+         case 'O':  // move object left
+           thetaX -= 5; //pedal rotation);
+           distance2 -=0.5;
+            break;
+        case 'P':  // move object right
+           thetaX += 5; //pedal rotation
+           distance2 +=0.5;
             break;
     }
 };
