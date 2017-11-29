@@ -175,7 +175,7 @@ function drawScene() {
 
        //draw maze
     stack.push();
-    stack.multiply(scalem(width/mazegen.gridSize, 1, width/mazegen.gridSize));
+    stack.multiply(scalem(width/Shapes.maze.mazegen.gridSize, 1, width/Shapes.maze.mazegen.gridSize));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);
@@ -198,7 +198,7 @@ function drawScene() {
       //need to solve problem of maze changing with each key stroke
 //    var maze2 = new Maze(18);
     stack.multiply(translate(0,8,0));
-    stack.multiply(scalem(width/mazegen.gridSize, 1, width/mazegen.gridSize));
+    stack.multiply(scalem(width/Shapes.maze2.mazegen.gridSize, 1, width/Shapes.maze2.mazegen.gridSize));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);
