@@ -14,8 +14,8 @@ function Stairs(){
 Stairs.prototype.drawSteps = function(){
     
     //translate to starting location
-    stack.multiply(translate(0,0,-7));
-        
+    stack.multiply(translate(0,0,-5));
+    stack.multiply(rotateY(180));    
     for(var i = 0; i<this.numSteps;i++){
         
         var scale = this.stepHeight * i;

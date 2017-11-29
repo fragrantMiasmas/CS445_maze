@@ -37,10 +37,10 @@ var lightAngle = 0;
 var program;
 
 // orthographic projection parameters
-var orthoL = -15;
-var orthoR = 15;
-var orthoB = -15;
-var orthoT = 15;
+var orthoL = -30;
+var orthoR = 30;
+var orthoB = -30;
+var orthoT = 30;
 
 window.onload = function init()
 {
@@ -180,6 +180,7 @@ function drawScene() {
     //draw maze
     stack.push();
     //stack.multiply(scalem(width/Shapes.maze.mazegen.gridSize, 1, width/Shapes.maze.mazegen.gridSize));
+    stack.multiply(scalem(2, 1, 2)); //makes maze bigger, easier to navigate through
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);
@@ -188,8 +189,8 @@ function drawScene() {
 
     //stairs
     stack.push();
-    //var stair = new Stairs();
-    stack.multiply(translate((Shapes.maze.mazegen.gridSize / -2) + Shapes.maze.mazegen.startRow, 3, 0)); //starts start at the finish of first maze
+    stack.multiply(scalem(2, 1, 2));
+    stack.multiply(translate(((Shapes.maze.mazegen.gridSize -1)/ -2) + Shapes.maze.mazegen.startRow, 0, 0)); //starts start at the finish of first maze
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);
@@ -202,6 +203,7 @@ function drawScene() {
     //need to solve problem of maze changing with each key stroke
 //    var maze2 = new Maze(18);
     stack.multiply(translate(0, 8, 0));
+    stack.multiply(scalem(2,1,2));
     //stack.multiply(scalem(width/Shapes.maze2.mazegen.gridSize, 1, width/Shapes.maze2.mazegen.gridSize));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
