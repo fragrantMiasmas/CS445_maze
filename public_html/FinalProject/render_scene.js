@@ -122,7 +122,7 @@ function render()
     //Right half of viewport
     projMat = ortho(-10, 10, -10, 10, 1, 1000); //ortho(left,right,bottom,top,near,far)
     gl.uniformMatrix4fv(uProjection, false, flatten(projMat));
-    viewMat = lookAt(vec3(0, 10, 0), vec3(0, 0, 0), vec3(1, 0, 0)); // lookAt(eye,at,up)
+    viewMat = lookAt(vec3(0, 20, 0), vec3(0, 0, 0), vec3(0, 0, -1)); // lookAt(eye,at,up)
     gl.viewport(canvas.width / 2, 0, canvas.width / 2, canvas.height);
     render1(viewMat);
 

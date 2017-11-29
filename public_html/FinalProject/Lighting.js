@@ -35,14 +35,14 @@ function Lighting() {
 
 Lighting.prototype.positionY = function(thetaY){ //set light position
     //takes an input from slider to calculate x,z 
-    this.x_pos = Math.cos(thetaY)*6; //radius of 6 about origin
-    this.y_pos = 6;
-    this.z_pos = Math.sin(thetaY)*6;
+    this.x_pos = Math.cos(thetaY)*3; //radius of 3 about origin
+    this.y_pos = 15;
+    this.z_pos = Math.sin(thetaY)*3;
     
     this.light_position = vec4(this.x_pos, this.y_pos, this.z_pos, 1); 
 //    console.log("light position = " + this.light_position);
 
-}
+};
 
 Lighting.prototype.setUp = function () {
     var ambient_product = scale(this.ka * this.intensity, this.ambientColor);
