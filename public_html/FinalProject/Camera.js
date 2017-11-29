@@ -14,7 +14,7 @@ function Camera() {
 
 // Camera *initial* location and orientation parameters
 //change starting point to maze, may need to adjust uvn?
-    this.eye_start = vec4([0, 0.5, 10, 1]); // initial camera location (needed for reseting)   
+    this.eye_start = vec4([0, 1, 10, 1]); // initial camera location (needed for reseting)   
     this.VPN = vec4([0, 0, 1, 0]);  // used to initialize uvn
     this.VUP = vec4([0, 1, 0, 0]);  // used to initialize uvn  
 

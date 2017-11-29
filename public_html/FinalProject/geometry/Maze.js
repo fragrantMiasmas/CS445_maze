@@ -15,7 +15,7 @@ function Maze(s) {
 
 Maze.prototype.drawMaze = function () {
     // maze walls
-    var centerVal = this.mazegen.gridSize / 2;
+    var centerVal = (this.mazegen.gridSize-1) / 2;
     for (var i = 0; i < this.mazegen.gridSize; i++) {
         for (var j = 0; j < this.mazegen.gridSize; j++) {
             if (this.mazegen.grid[i][j].isPath() === 0) {
@@ -32,10 +32,10 @@ Maze.prototype.drawMaze = function () {
     }
 
     // top and bottom walls
-    for (var i = -1; i < this.mazegen.gridSize + 1; i++) {
-        if (i !== this.mazegen.startRow) {
+    for (var i = 0; i < this.mazegen.gridSize + 2; i++) {
+        if (i-1 !== this.mazegen.startRow) {
             stack.push();
-            stack.multiply(translate(i - centerVal, 1.5, -centerVal - 1));
+            stack.multiply(translate(i -1- centerVal, 1.5, -centerVal - 1));
             stack.multiply(scalem(1,3,1));
             gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
             gl.uniform4fv(uColor, vec4(1, 0, 0, 1));
@@ -45,7 +45,7 @@ Maze.prototype.drawMaze = function () {
 
 
             stack.push();
-            stack.multiply(translate(i - centerVal, 1.5, centerVal));
+            stack.multiply(translate(i -1- centerVal, 1.5, centerVal+1));
             stack.multiply(scalem(1,3,1));
             gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
             gl.uniform4fv(uColor, vec4(1, 0, 0, 1));
@@ -67,7 +67,7 @@ Maze.prototype.drawMaze = function () {
         stack.pop();
 
         stack.push();
-        stack.multiply(translate(centerVal, 1.5, i - centerVal));
+        stack.multiply(translate(centerVal +1, 1.5, i - centerVal));
         stack.multiply(scalem(1,3,1));
         gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
         gl.uniform4fv(uColor, vec4(1, 0, 0, 1));

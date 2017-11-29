@@ -16,8 +16,8 @@ var uProjection;  //  shader uniform variable for projection matrix
 var uModel_view;  //  shader uniform variable for model-view matrix
 var uTexture;
 var thetaX = 0; //for rotating the pedals of unicycle and sphere
-var distance = 2*Math.PI * thetaX/360; //moving ovjects independently
-var distance2 = 2*Math.PI * thetaX/360; 
+var distance = 2 * Math.PI * thetaX / 360; //moving ovjects independently
+var distance2 = 2 * Math.PI * thetaX / 360;
 
 var camera = new Camera();
 var stack = new MatrixStack();
@@ -34,9 +34,13 @@ var stripes;
 
 var lightAngle = 0;
 
-//var mazegen = new MazeGen(21);
-
 var program;
+
+// orthographic projection parameters
+var orthoL = -15;
+var orthoR = 15;
+var orthoB = -15;
+var orthoT = 15;
 
 window.onload = function init()
 {
@@ -120,7 +124,7 @@ function render()
     render1(viewMat);
 
     //Right half of viewport
-    projMat = ortho(-10, 10, -10, 10, 1, 1000); //ortho(left,right,bottom,top,near,far)
+    projMat = ortho(orthoL, orthoR, orthoB, orthoT, 1, 1000); //ortho(left,right,bottom,top,near,far)
     gl.uniformMatrix4fv(uProjection, false, flatten(projMat));
     viewMat = lookAt(vec3(0, 20, 0), vec3(0, 0, 0), vec3(0, 0, -1)); // lookAt(eye,at,up)
     gl.viewport(canvas.width / 2, 0, canvas.width / 2, canvas.height);
@@ -161,44 +165,44 @@ function render1(vm) {
 
 function drawScene() {
     var width = Shapes.maze.width;
-    
-    
+
+
     //bb8
     stack.push();
     var bb8 = new Bb8();
 //    stack.multiply(translate(2, 0, -2));
-    stack.multiply(translate(0,0,distance));
-    stack.multiply(translate(distance2,0,0));
+    stack.multiply(translate(0, 0, distance));
+    stack.multiply(translate(distance2, 0, 0));
     stack.multiply(scalem(0.2, 0.2, 0.2));
     bb8.drawBb8();
     stack.pop();
 
-       //draw maze
+    //draw maze
     stack.push();
-    stack.multiply(scalem(width/Shapes.maze.mazegen.gridSize, 1, width/Shapes.maze.mazegen.gridSize));
+    //stack.multiply(scalem(width/Shapes.maze.mazegen.gridSize, 1, width/Shapes.maze.mazegen.gridSize));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);
     Shapes.maze.drawMaze();
     stack.pop();
-    
+
     //stairs
     stack.push();
-    var stair = new Stairs();
-    stack.multiply(translate(0,3,0));
+    //var stair = new Stairs();
+    stack.multiply(translate((Shapes.maze.mazegen.gridSize / -2) + Shapes.maze.mazegen.startRow, 3, 0)); //starts start at the finish of first maze
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);
-    stair.drawSteps();
+    Shapes.stair.drawSteps();
     stack.pop();
-    
-      //level 2
+
+    //level 2
     stack.push();
-      //alternative way of declaring maze so that each level is different 
-      //need to solve problem of maze changing with each key stroke
+    //alternative way of declaring maze so that each level is different 
+    //need to solve problem of maze changing with each key stroke
 //    var maze2 = new Maze(18);
-    stack.multiply(translate(0,8,0));
-    stack.multiply(scalem(width/Shapes.maze2.mazegen.gridSize, 1, width/Shapes.maze2.mazegen.gridSize));
+    stack.multiply(translate(0, 8, 0));
+    //stack.multiply(scalem(width/Shapes.maze2.mazegen.gridSize, 1, width/Shapes.maze2.mazegen.gridSize));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);

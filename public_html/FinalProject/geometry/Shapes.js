@@ -15,7 +15,8 @@ Shapes.cylinder = new Cylinder(48, 0.5);
 Shapes.sphere = new Sphere(500);
 Shapes.semisphere = new SemiSphere(100);
 Shapes.maze = new Maze(7);
-Shapes.maze2 = new Maze(19); //level 2
+Shapes.maze2 = new Maze(21); //level 2
+Shapes.stair = new Stairs();
 Shapes.axis = new Axis();
 
 Shapes.initShapes = function () {
