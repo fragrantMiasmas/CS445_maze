@@ -170,10 +170,12 @@ Camera.prototype.keyAction = function (key) {
         case 'E':  // turn right 
             console.log("turn right");
             this.viewRotation = mult(rotateY(-alpha), this.viewRotation);
+            thetaR += alpha;
             break;
         case 'W':   // turn left
             console.log("turn left");
             this.viewRotation = mult(rotateY(alpha), this.viewRotation);
+            thetaR -= alpha;
             break;
         case 'S':  // turn up   
             console.log(" turn up");

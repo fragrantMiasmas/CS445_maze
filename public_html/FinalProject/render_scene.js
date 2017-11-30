@@ -1,8 +1,8 @@
 /*
- Ariel Todoki
+ Elizabeth Reed and Ariel Todoki
  CS 445 Graphics
- Lab 7-Textures
- Due: November 3, 2017
+ Lab 8 (Final) - The A-Maze-ing Race
+
  */
 
 var canvas;       // HTML 5 canvas
@@ -41,6 +41,8 @@ var orthoL = -30;
 var orthoR = 30;
 var orthoB = -30;
 var orthoT = 30;
+
+var thetaR = 0;
 
 window.onload = function init()
 {
@@ -139,6 +141,16 @@ function render1(vm) {
     gl.uniform4fv(uLight_position, newLightPos);
     /////////
     stack.clear();
+    
+    
+    //bb8
+//    stack.push();
+//    var bb8 = new Bb8();
+//    stack.multiply(translate(0, -0.75, -1));
+//    stack.multiply(scalem(0.1, 0.1, 0.1));
+//    bb8.drawBb8();
+//    stack.pop();
+    
     stack.multiply(vm);
 
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
@@ -174,6 +186,17 @@ function drawScene() {
     stack.multiply(translate(0, 0, distance));
     stack.multiply(translate(distance2, 0, 0));
     stack.multiply(scalem(0.2, 0.2, 0.2));
+    bb8.drawBb8();
+    stack.pop();
+
+
+    stack.push();
+    var bb8 = new Bb8();
+    stack.multiply(translate(camera.eye[0], camera.eye[1]-0.75, camera.eye[2]-1));
+    stack.multiply(translate(0,0.75,1));
+    stack.multiply(rotateY(thetaR));
+    stack.multiply(translate(0,-0.75,-1));
+    stack.multiply(scalem(0.1, 0.1, 0.1));
     bb8.drawBb8();
     stack.pop();
 
