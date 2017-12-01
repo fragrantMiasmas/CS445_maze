@@ -10,6 +10,7 @@
 function Maze(s) {
     this.mazegen = new MazeGen(s);
     this.name = "maze";
+    this.size = s;
     //this.width = 15; //so that it stays within camera space
 }
 

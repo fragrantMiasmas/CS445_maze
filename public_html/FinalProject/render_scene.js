@@ -176,13 +176,11 @@ function render1(vm) {
 }
 
 function drawScene() {
-    var width = Shapes.maze.width;
-
+//    var width = Shapes.maze.width;
 
     //bb8
     stack.push();
     var bb8 = new Bb8();
-//    stack.multiply(translate(2, 0, -2));
     stack.multiply(translate(0, 0, distance));
     stack.multiply(translate(distance2, 0, 0));
     stack.multiply(scalem(0.2, 0.2, 0.2));
@@ -211,9 +209,10 @@ function drawScene() {
     stack.pop();
 
     //stairs
+    var stair_offset = ((Shapes.maze.mazegen.gridSize -1)/ -2) + Shapes.maze.mazegen.startRow;
     stack.push();
     stack.multiply(scalem(2, 1, 2));
-    stack.multiply(translate(((Shapes.maze.mazegen.gridSize -1)/ -2) + Shapes.maze.mazegen.startRow, 0, 0)); //starts start at the finish of first maze
+    stack.multiply(translate(stair_offset, 0, 0)); //starts start at the finish of first maze
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);
@@ -221,17 +220,17 @@ function drawScene() {
     stack.pop();
 
     //level 2
+    var offsetz = -(2 * Shapes.maze2.size + Shapes.stair.run);
+    var offsetx = ((Shapes.maze2.mazegen.gridSize -1)/ -2) + Shapes.maze2.mazegen.startRow - stair_offset;
+    console.log(offsetz);
+    
     stack.push();
-    //alternative way of declaring maze so that each level is different 
-    //need to solve problem of maze changing with each key stroke
-//    var maze2 = new Maze(18);
-    stack.multiply(translate(0, 8, 0));
+    stack.multiply(translate(-offsetx, Shapes.stair.rise, offsetz));
     stack.multiply(scalem(2,1,2));
     //stack.multiply(scalem(width/Shapes.maze2.mazegen.gridSize, 1, width/Shapes.maze2.mazegen.gridSize));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);
-    //drawMaze not the same as drawPrimitive
     Shapes.maze2.drawMaze(); //need to change so that the two mazes are different
     stack.pop();
 }
