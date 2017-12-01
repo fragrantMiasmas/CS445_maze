@@ -1,14 +1,14 @@
 function Stairs(){
     this.name = "Stairs";
 //    this.location = MazeGen.startRow; //change later
-    this.height = 6;
-    this.width = 2;
-    this.depth = 2/3 * this.width; //of each step
+    this.rise = 6;
+    this.run = 8;
+    this.width = 1;
     this.numSteps = 12;
-    this.stepHeight = this.height/this.numSteps;
+    this.stepHeight = this.rise/this.numSteps;
+    this.depth = this.run/this.numSteps; //of each step
+    this.slope = this.rise /this.run; //slope
     
-    //change slope so that the bottom ending and top enterance align
-    this.stepInc = 1/this.depth; //slope
     this.color = vec4(0,0,1,1);
 }
 Stairs.prototype.drawSteps = function(){
@@ -19,7 +19,7 @@ Stairs.prototype.drawSteps = function(){
     for(var i = 0; i<this.numSteps;i++){
         
         var scale = this.stepHeight * i;
-        var increment = this.stepInc * i;
+        var increment = this.slope * i;
     
         stack.push();
         //may need to rotate stairwell at an angle
