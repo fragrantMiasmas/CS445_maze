@@ -1,6 +1,6 @@
 /*
-Programmed by Daniel Koenig and Ariel Todoki for Lab 4 in Professor Orr's CSS-445 Computer Graphics Course
-*/
+ Programmed by Daniel Koenig and Ariel Todoki for Lab 4 in Professor Orr's CSS-445 Computer Graphics Course
+ */
 
 /**
  * Contains all of the parameters needed for controlling the camera.
@@ -59,12 +59,12 @@ Camera.prototype.calcUVN = function () {
 Camera.prototype.calcViewMat = function () {
     //create a translation matrix that holds the negated values of the current eye position. 
     var eyeTranslate = mat4(
-        vec4(1, 0, 0, -1 * this.eye[0]),
-        vec4(0, 1, 0, -1 * this.eye[1]),
-        vec4(0, 0, 1, -1 * this.eye[2]),
-        vec4(0, 0, 0, 1));
+            vec4(1, 0, 0, -1 * this.eye[0]),
+            vec4(0, 1, 0, -1 * this.eye[1]),
+            vec4(0, 0, 1, -1 * this.eye[2]),
+            vec4(0, 0, 0, 1));
 
- 
+
     mv = mult(this.viewRotation, eyeTranslate); //multiply eyeTranslate by viewRotation.
     mv.matrix = true;
 
@@ -77,7 +77,7 @@ Camera.prototype.calcViewMat = function () {
  * @return the projection matrix
  */
 Camera.prototype.calcProjectionMat = function () {
-    aspect = 0.5*canvas.width / canvas.height;
+    aspect = 0.5 * canvas.width / canvas.height;
     return perspective(this.fov, aspect, this.zNear, this.zFar);
 };
 
@@ -97,7 +97,7 @@ Camera.prototype.motion = function () {
             var ry = rotateY(10 * dy);  // rotation matrix around y
             var rx = rotateX(10 * dx);  // rotation matrix around x
 
-            this.tumble(rx, ry);   
+            this.tumble(rx, ry);
             mouseState.startx = mouseState.x;
             mouseState.starty = mouseState.y;
             break;
@@ -141,27 +141,27 @@ Camera.prototype.tumble = function (rx, ry) {
 
     //matrix to tumble around the x-axis. This happens in the CCS. 
     var B = mult(translate(camera_tumblePoint[0], camera_tumblePoint[1], camera_tumblePoint[2]),
-        mult(rx, translate(-1 * camera_tumblePoint[0], -1 * camera_tumblePoint[1], -1 * camera_tumblePoint[2])));
+            mult(rx, translate(-1 * camera_tumblePoint[0], -1 * camera_tumblePoint[1], -1 * camera_tumblePoint[2])));
     //matrix to tumble around the y-axis. This happens in the WCS. 
-    var A = mult(translate(tumblePoint[0], tumblePoint[1], tumblePoint[2]), 
-        mult(ry, translate(-1 * tumblePoint[0], -1 * tumblePoint[1], -1 * tumblePoint[2])));
+    var A = mult(translate(tumblePoint[0], tumblePoint[1], tumblePoint[2]),
+            mult(ry, translate(-1 * tumblePoint[0], -1 * tumblePoint[1], -1 * tumblePoint[2])));
     //create a new view matrix by multiplying B by the product of multiplying A by view. 
     view = mult(B, mult(view, A));
 
     //create a new viewRotation matrix by extracting the new u, v, and n vectors from the new viewMatrix (view). 
-    this.viewRotation = mat4( 
-        vec4(view[0][0], view[0][1], view[0][2], 0),
-        vec4(view[1][0], view[1][1], view[1][2], 0),
-        vec4(view[2][0], view[2][1], view[2][2], 0),
-        vec4(0, 0, 0, 1)
-    );
+    this.viewRotation = mat4(
+            vec4(view[0][0], view[0][1], view[0][2], 0),
+            vec4(view[1][0], view[1][1], view[1][2], 0),
+            vec4(view[2][0], view[2][1], view[2][2], 0),
+            vec4(0, 0, 0, 1)
+            );
 
-        
+
     var rotInverse = transpose(this.viewRotation); //transpose viewRotation to get its inverse
     //multiply view by rotInverse to get a matrix with the negated eye coords in the last column.
     var eye_negated = mult(rotInverse, view);
     //pull out the eye coords from eye_negated and negate them to make them positive.
-    this.eye = vec4(-1 * eye_negated[0][3], -1 * eye_negated[1][3], -1 * eye_negated[2][3], 1);     
+    this.eye = vec4(-1 * eye_negated[0][3], -1 * eye_negated[1][3], -1 * eye_negated[2][3], 1);
 };
 
 Camera.prototype.keyAction = function (key) {
@@ -169,13 +169,69 @@ Camera.prototype.keyAction = function (key) {
     switch (key) {     // different keys should be used because these do things in browser
         case 'E':  // turn right 
             console.log("turn right");
-            this.viewRotation = mult(rotateY(-alpha), this.viewRotation);
-            thetaR += alpha;
+            tumblePoint = vec4(bb8Loc[0], bb8Loc[1], bb8Loc[2], 1);
+    var view = this.calcViewMat();  // current view matrix
+//    camera_tumblePoint = mult(view, tumblePoint); //tumble point in the CCS. Used for x-axis tumbling. 
+//
+//    //matrix to tumble around the x-axis. This happens in the CCS. 
+//    var B = mult(translate(camera_tumblePoint[0], camera_tumblePoint[1], camera_tumblePoint[2]),
+//            mult(rx, translate(-1 * camera_tumblePoint[0], -1 * camera_tumblePoint[1], -1 * camera_tumblePoint[2])));
+    //matrix to tumble around the y-axis. This happens in the WCS. 
+    var A = mult(translate(tumblePoint[0], tumblePoint[1], tumblePoint[2]),
+            mult(rotateY(-alpha), translate(-1 * tumblePoint[0], -1 * tumblePoint[1], -1 * tumblePoint[2])));
+    //create a new view matrix by multiplying B by the product of multiplying A by view. 
+    //view = mult(B, mult(view, A));
+    view = mult(view, A);
+
+    //create a new viewRotation matrix by extracting the new u, v, and n vectors from the new viewMatrix (view). 
+    this.viewRotation = mat4(
+            vec4(view[0][0], view[0][1], view[0][2], 0),
+            vec4(view[1][0], view[1][1], view[1][2], 0),
+            vec4(view[2][0], view[2][1], view[2][2], 0),
+            vec4(0, 0, 0, 1)
+            );
+
+
+    var rotInverse = transpose(this.viewRotation); //transpose viewRotation to get its inverse
+    //multiply view by rotInverse to get a matrix with the negated eye coords in the last column.
+    var eye_negated = mult(rotInverse, view);
+    //pull out the eye coords from eye_negated and negate them to make them positive.
+    this.eye = vec4(-1 * eye_negated[0][3], -1 * eye_negated[1][3], -1 * eye_negated[2][3], 1);
+//            this.viewRotation = mult(rotateY(-alpha),this.viewRotation);
+//            thetaR += alpha;
             break;
         case 'W':   // turn left
             console.log("turn left");
-            this.viewRotation = mult(rotateY(alpha), this.viewRotation);
-            thetaR -= alpha;
+            tumblePoint = vec4(bb8Loc[0], bb8Loc[1], bb8Loc[2], 1);
+    var view = this.calcViewMat();  // current view matrix
+//    camera_tumblePoint = mult(view, tumblePoint); //tumble point in the CCS. Used for x-axis tumbling. 
+//
+//    //matrix to tumble around the x-axis. This happens in the CCS. 
+//    var B = mult(translate(camera_tumblePoint[0], camera_tumblePoint[1], camera_tumblePoint[2]),
+//            mult(rx, translate(-1 * camera_tumblePoint[0], -1 * camera_tumblePoint[1], -1 * camera_tumblePoint[2])));
+    //matrix to tumble around the y-axis. This happens in the WCS. 
+    var A = mult(translate(tumblePoint[0], tumblePoint[1], tumblePoint[2]),
+            mult(rotateY(alpha), translate(-1 * tumblePoint[0], -1 * tumblePoint[1], -1 * tumblePoint[2])));
+    //create a new view matrix by multiplying B by the product of multiplying A by view. 
+    //view = mult(B, mult(view, A));
+    view = mult(view, A);
+
+    //create a new viewRotation matrix by extracting the new u, v, and n vectors from the new viewMatrix (view). 
+    this.viewRotation = mat4(
+            vec4(view[0][0], view[0][1], view[0][2], 0),
+            vec4(view[1][0], view[1][1], view[1][2], 0),
+            vec4(view[2][0], view[2][1], view[2][2], 0),
+            vec4(0, 0, 0, 1)
+            );
+
+
+    var rotInverse = transpose(this.viewRotation); //transpose viewRotation to get its inverse
+    //multiply view by rotInverse to get a matrix with the negated eye coords in the last column.
+    var eye_negated = mult(rotInverse, view);
+    //pull out the eye coords from eye_negated and negate them to make them positive.
+    this.eye = vec4(-1 * eye_negated[0][3], -1 * eye_negated[1][3], -1 * eye_negated[2][3], 1);
+//            this.viewRotation = mult(rotateY(alpha), this.viewRotation);
+//            thetaR -= alpha;
             break;
         case 'S':  // turn up   
             console.log(" turn up");
@@ -195,34 +251,36 @@ Camera.prototype.keyAction = function (key) {
             break;
         case 'Q':  // move forward
             console.log("move forward");
-            this.eye = subtract(this.eye, mult(vec4(0.2,0.2,0.2,0),this.viewRotation[2])); //subtract the n vector from eye position.
+            this.eye = subtract(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2])); //subtract the n vector from eye position.
+            bb8Loc = vec3(this.eye[0], this.eye[1], this.eye[2]);
             thetaX -= 5; //pedal rotation
             break;
         case 'A':  //  move backward
             console.log("move backward");
-            this.eye = add(this.eye, mult(vec4(0.2,0.2,0.2,0),this.viewRotation[2])); //subtract the n vector from eye position.
+            this.eye = add(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2])); //subtract the n vector from eye position.
+            bb8Loc = vec3(this.eye[0], this.eye[1], this.eye[2]);
             thetaX += 5; //pedal rotation
             break;
         case 'R':  //  reset
             console.log("reset");
             this.reset();
             break;
-         case 'M':  // move object forward
-           thetaX -= 5; //pedal rotation);
-           distance -= 0.5;
+        case 'M':  // move object forward
+            thetaX -= 5; //pedal rotation);
+            distance -= 0.5;
             break;
-         case 'N':  // move object backward
-           thetaX += 5; //pedal rotation
-           distance += 0.5;
+        case 'N':  // move object backward
+            thetaX += 5; //pedal rotation
+            distance += 0.5;
 //           stack.multiply(translate(0, 0, distance));
             break;
-         case 'O':  // move object left
-           thetaX -= 5; //pedal rotation);
-           distance2 -=0.5;
+        case 'O':  // move object left
+            thetaX -= 5; //pedal rotation);
+            distance2 -= 0.5;
             break;
         case 'P':  // move object right
-           thetaX += 5; //pedal rotation
-           distance2 +=0.5;
+            thetaX += 5; //pedal rotation
+            distance2 += 0.5;
             break;
     }
 };
