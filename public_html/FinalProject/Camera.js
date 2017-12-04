@@ -14,7 +14,7 @@ function Camera() {
 
 // Camera *initial* location and orientation parameters
 //change starting point to maze, may need to adjust uvn?
-    this.eye_start = vec4([0, 1, 10, 1]); // initial camera location (needed for reseting)   
+    this.eye_start = vec4([0, 1, 11, 1]); // initial camera location (needed for reseting)   
     this.VPN = vec4([0, 0, 1, 0]);  // used to initialize uvn
     this.VUP = vec4([0, 1, 0, 0]);  // used to initialize uvn  
 
@@ -252,13 +252,13 @@ Camera.prototype.keyAction = function (key) {
         case 'Q':  // move forward
             console.log("move forward");
             this.eye = subtract(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2])); //subtract the n vector from eye position.
-            bb8Loc = vec3(this.eye[0], this.eye[1], this.eye[2]);
+            bb8Loc = subtract(this.eye, mult(vec4(1, 1, 1, 0), this.viewRotation[2]));
             thetaX -= 5; //pedal rotation
             break;
         case 'A':  //  move backward
             console.log("move backward");
             this.eye = add(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2])); //subtract the n vector from eye position.
-            bb8Loc = vec3(this.eye[0], this.eye[1], this.eye[2]);
+            bb8Loc = add(this.eye, mult(vec4(-1, -1, -1, 0), this.viewRotation[2]));
             thetaX += 5; //pedal rotation
             break;
         case 'R':  //  reset

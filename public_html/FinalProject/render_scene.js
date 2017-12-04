@@ -44,8 +44,7 @@ var orthoT = 30;
 
 var thetaR = 0;
 
-var bb8Loc = vec4(0, 0.25, 9,1);
-var newBb8Loc;
+var bb8Loc = vec4(0, 1, 10,1);
 
 window.onload = function init()
 {
@@ -196,7 +195,7 @@ function drawScene() {
 
     stack.push();
     var bb8 = new Bb8();
-    stack.multiply(translate(bb8Loc[0], bb8Loc[1], bb8Loc[2]));
+    stack.multiply(translate(bb8Loc[0], bb8Loc[1]-0.75, bb8Loc[2]));
 //    stack.multiply(translate(camera.eye[0], camera.eye[1]-0.75, camera.eye[2]-1));
 //    stack.multiply(translate(0,0.75,1));
 //    stack.multiply(rotateY(thetaR));
