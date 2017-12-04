@@ -226,13 +226,14 @@ function drawScene() {
     stack.pop();
 
     //level 2
-    var offsetz = -(2 * Shapes.maze2.size + Shapes.stair.run);
+    var offsetz = -(((Shapes.maze2.size+1)/2) + ((Shapes.maze.size+1)/2) + Shapes.stair.run+1);
     var offsetx = ((Shapes.maze2.mazegen.gridSize -1)/ -2) + Shapes.maze2.mazegen.startRow - stair_offset;
     console.log(offsetz);
     
     stack.push();
-    stack.multiply(translate(-offsetx, Shapes.stair.rise, offsetz));
+    
     stack.multiply(scalem(2,1,2));
+    stack.multiply(translate(-offsetx, Shapes.stair.rise-0.5, offsetz));
     //stack.multiply(scalem(width/Shapes.maze2.mazegen.gridSize, 1, width/Shapes.maze2.mazegen.gridSize));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
