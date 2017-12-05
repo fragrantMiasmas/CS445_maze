@@ -1,5 +1,5 @@
 /* 
- * Ariel Todoki
+ * Ariel Todoki and Elizabeth Reed
  * 
  * Creates 3D maze using the 2D array created by MazeGen
  * draws cubes as walls which are designated by a 0 in the 2D array

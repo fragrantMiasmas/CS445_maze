@@ -16,6 +16,7 @@ Shapes.sphere = new Sphere(500);
 Shapes.semisphere = new SemiSphere(100);
 Shapes.maze = new Maze(7);
 Shapes.maze2 = new Maze(21); //level 2
+Shapes.maze3 = new Maze(31); //level 3
 Shapes.stair = new Stairs();
 Shapes.axis = new Axis();
 
