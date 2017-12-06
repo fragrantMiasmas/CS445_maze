@@ -169,15 +169,15 @@ function render1(vm) {
 
 
     //draw light cube
-    stack.push();
-    stack.multiply(rotateY(lightAngle));
-    stack.multiply(translate(light.light_position[0], light.light_position[1], light.light_position[2]));
-    stack.multiply(scalem(0.25, 0.25, 0.25));
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
-    gl.uniform1i(uColorMode, 1);
-    Shapes.drawPrimitive(Shapes.cube);
-    stack.pop();
+//    stack.push();
+//    stack.multiply(rotateY(lightAngle));
+//    stack.multiply(translate(light.light_position[0], light.light_position[1], light.light_position[2]));
+//    stack.multiply(scalem(0.25, 0.25, 0.25));
+//    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+//    gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
+//    gl.uniform1i(uColorMode, 1);
+//    Shapes.drawPrimitive(Shapes.cube);
+//    stack.pop();
 
 }
 
