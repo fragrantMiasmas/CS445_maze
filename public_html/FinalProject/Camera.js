@@ -253,12 +253,16 @@ Camera.prototype.keyAction = function (key) {
             console.log("move forward");
             this.eye = subtract(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2])); //subtract the n vector from eye position.
             bb8Loc = subtract(this.eye, mult(vec4(1, 1, 1, 0), this.viewRotation[2]));
+            lightLoc = subtract(this.eye, mult(vec4(0.5, 0.5, 0.5, 0), this.viewRotation[2]));
+            light.movePos(bb8Loc);
             thetaX -= 5; //pedal rotation
             break;
         case 'A':  //  move backward
             console.log("move backward");
             this.eye = add(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2])); //subtract the n vector from eye position.
             bb8Loc = add(this.eye, mult(vec4(-1, -1, -1, 0), this.viewRotation[2]));
+            lightLoc = subtract(this.eye, mult(vec4(0.5, 0.5, 0.5, 0), this.viewRotation[2]));
+            light.movePos(bb8Loc);
             thetaX += 5; //pedal rotation
             break;
         case 'R':  //  reset

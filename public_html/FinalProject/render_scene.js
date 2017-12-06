@@ -78,7 +78,8 @@ window.onload = function init()
 //     bodyTexture2 = new Checkerboard(); //body
     stripes = new Stripes();
 
-    light.positionY(0);
+    //light.positionY(0);
+    light.movePos(bb8Loc);
     light.setUp();
 
     render();
@@ -215,7 +216,7 @@ function drawScene() {
     stack.pop();
 
     //stairs
-    var stair_offset = ((Shapes.maze.mazegen.gridSize -1)/ -2) + Shapes.maze.mazegen.startRow;
+    var stair_offset = ((Shapes.maze.mazegen.gridSize-1)/ -2) + Shapes.maze.mazegen.startRow;
     stack.push();
     stack.multiply(scalem(2, 1, 2));
     stack.multiply(translate(stair_offset, 0, 0)); //starts start at the finish of first maze

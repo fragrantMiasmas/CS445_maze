@@ -23,11 +23,11 @@ function Lighting() {
     this.diffuseColor = vec4(1.0,1.0,1.0,1.0);
     this.specularColor = vec4(1.0,1.0,1.0,1.0);
 
-    this.intensity = 1.0;
+    this.intensity = .75;
 
     // These are really material properties and belong with each individual object but
     // for now we will lump them in here and they will apply to all objects.
-    this.ka = 0.2;
+    this.ka = 0.15;
     this.kd = 1.0;
     this.ks = 0.8;
     this.shininess = 50.0;
@@ -42,6 +42,10 @@ Lighting.prototype.positionY = function(thetaY){ //set light position
     this.light_position = vec4(this.x_pos, this.y_pos, this.z_pos, 1); 
 //    console.log("light position = " + this.light_position);
 
+};
+
+Lighting.prototype.movePos = function(lightLoc){
+    this.light_position = vec4(lightLoc[0], lightLoc[1], lightLoc[2], lightLoc[3]);
 };
 
 Lighting.prototype.setUp = function () {
