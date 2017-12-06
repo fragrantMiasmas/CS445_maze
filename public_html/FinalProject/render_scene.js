@@ -227,7 +227,7 @@ function drawScene() {
     stack.pop();
 
     //level 2
-    var offsetz = -(((Shapes.maze2.size+1)/2) + ((Shapes.maze.size+1)/2) + Shapes.stair.run+1);
+    var offsetz = -(((Shapes.maze2.size+1)/2) + ((Shapes.maze.size+1)/2) + Shapes.stair.run);
     var offsetx = ((Shapes.maze2.mazegen.gridSize -1)/ -2) + Shapes.maze2.mazegen.startRow - stair_offset;
     console.log(offsetz);
     

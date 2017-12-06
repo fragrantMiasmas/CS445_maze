@@ -14,7 +14,7 @@ function Stairs(){
 Stairs.prototype.drawSteps = function(){
     
     //translate to starting location
-    stack.multiply(translate(0,0,-5));
+    stack.multiply(translate(0,0,-4));
     stack.multiply(rotateY(180));    
     for(var i = 0; i<this.numSteps;i++){
         
