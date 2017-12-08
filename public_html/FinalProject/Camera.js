@@ -165,6 +165,8 @@ Camera.prototype.tumble = function (rx, ry) {
 };
 
 Camera.prototype.keyAction = function (key) {
+    var maze = Shapes.maze;
+    var collision = new collisionDetect();
     var alpha = 8.0;  // used to control the amount of a turn during the flythrough
     switch (key) {     // different keys should be used because these do things in browser
         case 'E':  // turn right 
@@ -250,20 +252,26 @@ Camera.prototype.keyAction = function (key) {
             this.viewRotation = mult(rotateZ(alpha), this.viewRotation);
             break;
         case 'Q':  // move forward
+           tempLoc = subtract(this.eye, mult(vec4(1.75, 1.75, 1.75, 0), this.viewRotation[2]));
+            if(!collision.detect(tempLoc[0],tempLoc[2],maze)){
             console.log("move forward");
             this.eye = subtract(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2])); //subtract the n vector from eye position.
             bb8Loc = subtract(this.eye, mult(vec4(1, 1, 1, 0), this.viewRotation[2]));
             lightLoc = subtract(this.eye, mult(vec4(0.5, 0.5, 0.5, 0), this.viewRotation[2]));
             light.movePos(bb8Loc);
             thetaX -= 5; //pedal rotation
+        }
             break;
+            
         case 'A':  //  move backward
+            if(true){
             console.log("move backward");
             this.eye = add(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2])); //subtract the n vector from eye position.
             bb8Loc = add(this.eye, mult(vec4(-1, -1, -1, 0), this.viewRotation[2]));
             lightLoc = subtract(this.eye, mult(vec4(0.5, 0.5, 0.5, 0), this.viewRotation[2]));
             light.movePos(bb8Loc);
             thetaX += 5; //pedal rotation
+        }
             break;
         case 'R':  //  reset
             console.log("reset");

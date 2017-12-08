@@ -10,7 +10,12 @@
 function Maze(s) {
     this.mazegen = new MazeGen(s);
     this.name = "maze";
-    this.size = s;
+    if(s%2 === 0){ //checks if an even number was entered for the dimensions
+        this.size = s+1;
+    }
+    else{
+        this.size = s;
+    }
     //this.width = 15; //so that it stays within camera space
 }
 
