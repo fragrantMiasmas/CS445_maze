@@ -16,7 +16,7 @@ var showTime = "Time: " + minutes + ":" + seconds;
         }
         
         else if (seconds <= 9 && seconds > 0) {
-            showTime = minutes + ":0" + seconds;
+            showTime = "Time: " + minutes + ":0" + seconds;
             document.getElementById("timer").innerHTML = showTime;
         }
         
