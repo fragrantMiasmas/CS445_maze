@@ -168,72 +168,53 @@ Camera.prototype.keyAction = function (key) {
     var maze = Shapes.maze;
     var collision = new collisionDetect();
     var alpha = 8.0;  // used to control the amount of a turn during the flythrough
+    
     switch (key) {     // different keys should be used because these do things in browser
         case 'E':  // turn right 
             console.log("turn right");
             tumblePoint = vec4(bb8Loc[0], bb8Loc[1], bb8Loc[2], 1);
-    var view = this.calcViewMat();  // current view matrix
-//    camera_tumblePoint = mult(view, tumblePoint); //tumble point in the CCS. Used for x-axis tumbling. 
-//
-//    //matrix to tumble around the x-axis. This happens in the CCS. 
-//    var B = mult(translate(camera_tumblePoint[0], camera_tumblePoint[1], camera_tumblePoint[2]),
-//            mult(rx, translate(-1 * camera_tumblePoint[0], -1 * camera_tumblePoint[1], -1 * camera_tumblePoint[2])));
-    //matrix to tumble around the y-axis. This happens in the WCS. 
-    var A = mult(translate(tumblePoint[0], tumblePoint[1], tumblePoint[2]),
-            mult(rotateY(-alpha), translate(-1 * tumblePoint[0], -1 * tumblePoint[1], -1 * tumblePoint[2])));
-    //create a new view matrix by multiplying B by the product of multiplying A by view. 
-    //view = mult(B, mult(view, A));
-    view = mult(view, A);
+            var view = this.calcViewMat();  // current view matrix
+            //matrix to rotate around the y-axis. This happens in the WCS. 
+            var A = mult(translate(tumblePoint[0], tumblePoint[1], tumblePoint[2]),
+                    mult(rotateY(-alpha), translate(-1 * tumblePoint[0], -1 * tumblePoint[1], -1 * tumblePoint[2])));
+            //create a new view matrix by multiplying A by view. 
+            view = mult(view, A);
 
-    //create a new viewRotation matrix by extracting the new u, v, and n vectors from the new viewMatrix (view). 
-    this.viewRotation = mat4(
-            vec4(view[0][0], view[0][1], view[0][2], 0),
-            vec4(view[1][0], view[1][1], view[1][2], 0),
-            vec4(view[2][0], view[2][1], view[2][2], 0),
-            vec4(0, 0, 0, 1)
-            );
-
-
-    var rotInverse = transpose(this.viewRotation); //transpose viewRotation to get its inverse
-    //multiply view by rotInverse to get a matrix with the negated eye coords in the last column.
-    var eye_negated = mult(rotInverse, view);
-    //pull out the eye coords from eye_negated and negate them to make them positive.
-    this.eye = vec4(-1 * eye_negated[0][3], -1 * eye_negated[1][3], -1 * eye_negated[2][3], 1);
-//            this.viewRotation = mult(rotateY(-alpha),this.viewRotation);
-//            thetaR += alpha;
+            //create a new viewRotation matrix by extracting the new u, v, and n vectors from the new viewMatrix (view). 
+            this.viewRotation = mat4(
+                    vec4(view[0][0], view[0][1], view[0][2], 0),
+                    vec4(view[1][0], view[1][1], view[1][2], 0),
+                    vec4(view[2][0], view[2][1], view[2][2], 0),
+                    vec4(0, 0, 0, 1)
+                    );
+            var rotInverse = transpose(this.viewRotation); //transpose viewRotation to get its inverse
+            //multiply view by rotInverse to get a matrix with the negated eye coords in the last column.
+            var eye_negated = mult(rotInverse, view);
+            //pull out the eye coords from eye_negated and negate them to make them positive.
+            this.eye = vec4(-1 * eye_negated[0][3], -1 * eye_negated[1][3], -1 * eye_negated[2][3], 1);
             break;
         case 'W':   // turn left
             console.log("turn left");
             tumblePoint = vec4(bb8Loc[0], bb8Loc[1], bb8Loc[2], 1);
-    var view = this.calcViewMat();  // current view matrix
-//    camera_tumblePoint = mult(view, tumblePoint); //tumble point in the CCS. Used for x-axis tumbling. 
-//
-//    //matrix to tumble around the x-axis. This happens in the CCS. 
-//    var B = mult(translate(camera_tumblePoint[0], camera_tumblePoint[1], camera_tumblePoint[2]),
-//            mult(rx, translate(-1 * camera_tumblePoint[0], -1 * camera_tumblePoint[1], -1 * camera_tumblePoint[2])));
-    //matrix to tumble around the y-axis. This happens in the WCS. 
-    var A = mult(translate(tumblePoint[0], tumblePoint[1], tumblePoint[2]),
-            mult(rotateY(alpha), translate(-1 * tumblePoint[0], -1 * tumblePoint[1], -1 * tumblePoint[2])));
-    //create a new view matrix by multiplying B by the product of multiplying A by view. 
-    //view = mult(B, mult(view, A));
-    view = mult(view, A);
+            var view = this.calcViewMat();  // current view matrix
+            //matrix to rotate around the y-axis. This happens in the WCS. 
+            var A = mult(translate(tumblePoint[0], tumblePoint[1], tumblePoint[2]),
+                    mult(rotateY(alpha), translate(-1 * tumblePoint[0], -1 * tumblePoint[1], -1 * tumblePoint[2])));
+            //create a new view matrix by multiplying A by view. 
+            view = mult(view, A);
 
-    //create a new viewRotation matrix by extracting the new u, v, and n vectors from the new viewMatrix (view). 
-    this.viewRotation = mat4(
-            vec4(view[0][0], view[0][1], view[0][2], 0),
-            vec4(view[1][0], view[1][1], view[1][2], 0),
-            vec4(view[2][0], view[2][1], view[2][2], 0),
-            vec4(0, 0, 0, 1)
-            );
-
-
-    var rotInverse = transpose(this.viewRotation); //transpose viewRotation to get its inverse
-    //multiply view by rotInverse to get a matrix with the negated eye coords in the last column.
-    var eye_negated = mult(rotInverse, view);
-    //pull out the eye coords from eye_negated and negate them to make them positive.
-    this.eye = vec4(-1 * eye_negated[0][3], -1 * eye_negated[1][3], -1 * eye_negated[2][3], 1);
-//            this.viewRotation = mult(rotateY(alpha), this.viewRotation);
-//            thetaR -= alpha;
+            //create a new viewRotation matrix by extracting the new u, v, and n vectors from the new viewMatrix (view). 
+            this.viewRotation = mat4(
+                    vec4(view[0][0], view[0][1], view[0][2], 0),
+                    vec4(view[1][0], view[1][1], view[1][2], 0),
+                    vec4(view[2][0], view[2][1], view[2][2], 0),
+                    vec4(0, 0, 0, 1)
+                    );
+            var rotInverse = transpose(this.viewRotation); //transpose viewRotation to get its inverse
+            //multiply view by rotInverse to get a matrix with the negated eye coords in the last column.
+            var eye_negated = mult(rotInverse, view);
+            //pull out the eye coords from eye_negated and negate them to make them positive.
+            this.eye = vec4(-1 * eye_negated[0][3], -1 * eye_negated[1][3], -1 * eye_negated[2][3], 1);
             break;
         case 'S':  // turn up   
             console.log(" turn up");
@@ -264,7 +245,7 @@ Camera.prototype.keyAction = function (key) {
             //if bb8Loc is near stairs, add M key
         }
             break;
-            
+
         case 'A':  //  move backward
             backLoc = add(this.eye, mult(vec4(-0.5, -0.5, -0.5, 0), this.viewRotation[2]));
             if(!collision.detect(backLoc[0],backLoc[2],maze) && hasTime){ //&& timer.hasTime

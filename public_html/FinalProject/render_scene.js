@@ -173,6 +173,7 @@ function render1(vm) {
         light.shininess = 50.0;
         light.setUp();
     }
+    
     //draw scene
     stack.push();
     drawScene();
