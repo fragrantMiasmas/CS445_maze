@@ -22,6 +22,7 @@ var distance2 = 2 * Math.PI * thetaX / 360;
 var camera = new Camera();
 var stack = new MatrixStack();
 var light = new Lighting();
+var timer = new Timer();
 
 //Texture variables
 var checkerboard;
@@ -132,7 +133,7 @@ function render()
 
     //Right half of viewport
 //    var position1 = lookAt(vec3(0, 20, 0), vec3(0, 0, 0), vec3(0, 0, -1)); //level one
-    var followPosition = lookAt(vec3(bb8Loc[0], bb8Loc[0] + 30, bb8Loc[2]), vec3(bb8Loc[0], 0, bb8Loc[2]), vec3(0, 0, -1));
+    var followPosition = lookAt(vec3(bb8Loc[0], bb8Loc[0] + 20, bb8Loc[2]-5), vec3(bb8Loc[0], 0, bb8Loc[2]-5), vec3(0, 0, -1));
     
     
     projMat = ortho(orthoL, orthoR, orthoB, orthoT, 1, 1000); //ortho(left,right,bottom,top,near,far)
@@ -156,29 +157,18 @@ function render1(vm) {
     stack.multiply(vm);
 
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    Shapes.axis.draw();
-
+    
+    console.log(timer.hasTime);
+    if(!timer.hasTime){ //when it runs out of time
+        light.ka = 0;
+    }
     //draw scene
     stack.push();
     drawScene();
     stack.pop();
-
-
-    //draw light cube
-//    stack.push();
-//    stack.multiply(rotateY(lightAngle));
-//    stack.multiply(translate(light.light_position[0], light.light_position[1], light.light_position[2]));
-//    stack.multiply(scalem(0.25, 0.25, 0.25));
-//    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-//    gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
-//    gl.uniform1i(uColorMode, 1);
-//    Shapes.drawPrimitive(Shapes.cube);
-//    stack.pop();
-
 }
 
 function drawScene() {
-
     //bb8
     stack.push();
     var bb8 = new Bb8();
@@ -187,10 +177,8 @@ function drawScene() {
     bb8.drawBb8();
     stack.pop();
 
-//    console.log(bb8Loc);
     //draw maze
     stack.push();
-    //stack.multiply(scalem(width/Shapes.maze.mazegen.gridSize, 1, width/Shapes.maze.mazegen.gridSize));
     stack.multiply(scalem(2, 1, 2)); //makes maze bigger, easier to navigate through
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));

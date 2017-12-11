@@ -1,4 +1,4 @@
-/* 
+/* Elizabeth Reed, Ariel Todoki
  * Contains the lighting and material  parameters and sets up 
  * uniform variables for these parameters. 
  * Note: If you want to use different material properties for different objects, you 
@@ -32,17 +32,6 @@ function Lighting() {
     this.ks = 0.8;
     this.shininess = 50.0;
 }
-
-Lighting.prototype.positionY = function(thetaY){ //set light position
-    //takes an input from slider to calculate x,z 
-    this.x_pos = Math.cos(thetaY)*3; //radius of 3 about origin
-    this.y_pos = 15;
-    this.z_pos = Math.sin(thetaY)*3;
-    
-    this.light_position = vec4(this.x_pos, this.y_pos, this.z_pos, 1); 
-//    console.log("light position = " + this.light_position);
-
-};
 
 Lighting.prototype.movePos = function(lightLoc){
     this.light_position = vec4(lightLoc[0], lightLoc[1], lightLoc[2], lightLoc[3]);

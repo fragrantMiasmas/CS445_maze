@@ -253,23 +253,23 @@ Camera.prototype.keyAction = function (key) {
             break;
         case 'Q':  // move forward
            tempLoc = subtract(this.eye, mult(vec4(1.75, 1.75, 1.75, 0), this.viewRotation[2]));
-            if(!collision.detect(tempLoc[0],tempLoc[2],maze)){
+            if(!collision.detect(tempLoc[0],tempLoc[2],maze)){ //&& timer.hasTime
             console.log("move forward");
             this.eye = subtract(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2])); //subtract the n vector from eye position.
             bb8Loc = subtract(this.eye, mult(vec4(1, 1, 1, 0), this.viewRotation[2]));
-//            lightLoc = subtract(this.eye, mult(vec4(0.5, 0.5, 0.5, 0), this.viewRotation[2]));
             light.movePos(bb8Loc);
             thetaX -= 5; //pedal rotation
+            
+            //if bb8Loc is near stairs, add M key
         }
             break;
             
         case 'A':  //  move backward
             backLoc = add(this.eye, mult(vec4(-0.5, -0.5, -0.5, 0), this.viewRotation[2]));
-            if(!collision.detect(backLoc[0],backLoc[2],maze)){
+            if(!collision.detect(backLoc[0],backLoc[2],maze) ){ //&& timer.hasTime
             console.log("move backward");
             this.eye = add(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2])); //subtract the n vector from eye position.
             bb8Loc = add(this.eye, mult(vec4(-1, -1, -1, 0), this.viewRotation[2]));
-//            lightLoc = subtract(this.eye, mult(vec4(0.5, 0.5, 0.5, 0), this.viewRotation[2]));
             light.movePos(bb8Loc);
             thetaX += 5; //pedal rotation
         }
@@ -278,22 +278,20 @@ Camera.prototype.keyAction = function (key) {
             console.log("reset");
             this.reset();
             break;
-//        case 'M':  // move object forward
-//            thetaX -= 5; //pedal rotation);
-//            distance -= 0.5;
-//            break;
+        case 'M':  // only when it reaches the stairs
+            console.log("move upstairs");
+            this.eye = subtract(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2]));
+            this.eye = add(this.eye, mult(vec4(0.05, 0.05, 0.05, 0), this.viewRotation[1])); 
+            bb8Loc = add(this.eye, mult(vec4(1, 1, 1, 0), this.viewRotation[1]));
+            light.movePos(bb8Loc);
+            
+            thetaX -= 5; 
+            break;
 //        case 'N':  // move object backward
 //            thetaX += 5; //pedal rotation
 //            distance += 0.5;
 ////           stack.multiply(translate(0, 0, distance));
 //            break;
-//        case 'O':  // move object left
-//            thetaX -= 5; //pedal rotation);
-//            distance2 -= 0.5;
-//            break;
-//        case 'P':  // move object right
-//            thetaX += 5; //pedal rotation
-//            distance2 += 0.5;
-//            break;
+
     }
 };
