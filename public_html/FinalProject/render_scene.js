@@ -43,8 +43,11 @@ var orthoB = -30;
 var orthoT = 30;
 
 var thetaR = 0;
-
 var bb8Loc = vec4(0, 1, 10,1);
+
+var stair_offset = ((Shapes.maze.mazegen.gridSize-1)/ -2) + Shapes.maze.mazegen.startRow;
+var offsetz = -(((Shapes.maze2.size+1)/2) + ((Shapes.maze.size+1)/2) + Shapes.stair.run);
+var offsetx = ((Shapes.maze2.mazegen.gridSize -1)/ -2) + Shapes.maze2.mazegen.startRow - stair_offset;
 
 window.onload = function init()
 {
@@ -75,7 +78,6 @@ window.onload = function init()
     gradient = new Gradient();
     headTexture = new ImageTexture("textures/bb8_head.jpg"); //head
     bodyTexture2 = new ImageTexture("textures/bbb81.png"); //body
-//     bodyTexture2 = new Checkerboard(); //body
     stripes = new Stripes();
 
     //light.positionY(0);
@@ -112,10 +114,10 @@ function shaderSetup() {
     uColorMode = gl.getUniformLocation(program, "uColorMode");
 }
 
-function sliderEventHandler(value) {
-    lightAngle = value;
-    render();
-}
+//function sliderEventHandler(value) {
+//    lightAngle = value;
+//    render();
+//}
 
 function render()
 {
@@ -129,9 +131,12 @@ function render()
     render1(viewMat);
 
     //Right half of viewport
+    var position1 = lookAt(vec3(0, 20, 0), vec3(0, 0, 0), vec3(0, 0, -1)); //level one
+    var position2 = lookAt(vec3(-offsetx, 40, 2*offsetz), vec3(-offsetx, 0, 2*offsetz), vec3(0, 0, -1)); //level two
+    
     projMat = ortho(orthoL, orthoR, orthoB, orthoT, 1, 1000); //ortho(left,right,bottom,top,near,far)
     gl.uniformMatrix4fv(uProjection, false, flatten(projMat));
-    viewMat = lookAt(vec3(0, 20, 0), vec3(0, 0, 0), vec3(0, 0, -1)); // lookAt(eye,at,up)
+    viewMat = position2; // lookAt(eye,at,up)
     gl.viewport(canvas.width / 2, 0, canvas.width / 2, canvas.height);
     render1(viewMat);
 
@@ -144,19 +149,7 @@ function render1(vm) {
     gl.uniform4fv(uLight_position, newLightPos);
     /////////
     stack.clear();
-    
-    
-    //bb8
-//    stack.push();
-//    var bb8 = new Bb8();
-//    stack.multiply(translate(0, -0.75, -1));
-//    stack.multiply(scalem(0.1, 0.1, 0.1));
-//    bb8.drawBb8();
-//    stack.pop();
-//    
-//newBb8Loc = mult(translate(0,-0.75,-1),mult(vm,bb8Loc));
-//console.log(newBb8Loc);
-    
+ 
     stack.multiply(vm);
 
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
@@ -187,20 +180,7 @@ function drawScene() {
     //bb8
     stack.push();
     var bb8 = new Bb8();
-    stack.multiply(translate(0, 0, distance));
-    stack.multiply(translate(distance2, 0, 0));
-    stack.multiply(scalem(0.2, 0.2, 0.2));
-    bb8.drawBb8();
-    stack.pop();
-
-
-    stack.push();
-    var bb8 = new Bb8();
     stack.multiply(translate(bb8Loc[0], bb8Loc[1]-0.75, bb8Loc[2]));
-//    stack.multiply(translate(camera.eye[0], camera.eye[1]-0.75, camera.eye[2]-1));
-//    stack.multiply(translate(0,0.75,1));
-//    stack.multiply(rotateY(thetaR));
-//    stack.multiply(translate(0,-0.75,-1));
     stack.multiply(scalem(0.1, 0.1, 0.1));
     bb8.drawBb8();
     stack.pop();
@@ -216,7 +196,7 @@ function drawScene() {
     stack.pop();
 
     //stairs
-    var stair_offset = ((Shapes.maze.mazegen.gridSize-1)/ -2) + Shapes.maze.mazegen.startRow;
+//    var stair_offset = ((Shapes.maze.mazegen.gridSize-1)/ -2) + Shapes.maze.mazegen.startRow;
     stack.push();
     stack.multiply(scalem(2, 1, 2));
     stack.multiply(translate(stair_offset, 0, 0)); //starts start at the finish of first maze
@@ -227,15 +207,13 @@ function drawScene() {
     stack.pop();
 
     //level 2
-    var offsetz = -(((Shapes.maze2.size+1)/2) + ((Shapes.maze.size+1)/2) + Shapes.stair.run);
-    var offsetx = ((Shapes.maze2.mazegen.gridSize -1)/ -2) + Shapes.maze2.mazegen.startRow - stair_offset;
-    console.log(offsetz);
+//    var offsetz = -(((Shapes.maze2.size+1)/2) + ((Shapes.maze.size+1)/2) + Shapes.stair.run);
+//    var offsetx = ((Shapes.maze2.mazegen.gridSize -1)/ -2) + Shapes.maze2.mazegen.startRow - stair_offset;
     
     stack.push();
     
     stack.multiply(scalem(2,1,2));
     stack.multiply(translate(-offsetx, Shapes.stair.rise-0.5, offsetz));
-    //stack.multiply(scalem(width/Shapes.maze2.mazegen.gridSize, 1, width/Shapes.maze2.mazegen.gridSize));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);
