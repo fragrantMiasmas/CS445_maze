@@ -131,12 +131,15 @@ function render()
     render1(viewMat);
 
     //Right half of viewport
-    var position1 = lookAt(vec3(0, 20, 0), vec3(0, 0, 0), vec3(0, 0, -1)); //level one
-    var position2 = lookAt(vec3(-offsetx, 40, 2*offsetz), vec3(-offsetx, 0, 2*offsetz), vec3(0, 0, -1)); //level two
+//    var position1 = lookAt(vec3(0, 20, 0), vec3(0, 0, 0), vec3(0, 0, -1)); //level one
+    var followPosition = lookAt(vec3(bb8Loc[0], bb8Loc[0] + 30, bb8Loc[2]), vec3(bb8Loc[0], 0, bb8Loc[2]), vec3(0, 0, -1));
+    
     
     projMat = ortho(orthoL, orthoR, orthoB, orthoT, 1, 1000); //ortho(left,right,bottom,top,near,far)
     gl.uniformMatrix4fv(uProjection, false, flatten(projMat));
-    viewMat = position2; // lookAt(eye,at,up)
+    
+//    if(bb8Loc)
+    viewMat = followPosition; // lookAt(eye,at,up)
     gl.viewport(canvas.width / 2, 0, canvas.width / 2, canvas.height);
     render1(viewMat);
 
@@ -175,7 +178,6 @@ function render1(vm) {
 }
 
 function drawScene() {
-//    var width = Shapes.maze.width;
 
     //bb8
     stack.push();
@@ -185,6 +187,7 @@ function drawScene() {
     bb8.drawBb8();
     stack.pop();
 
+//    console.log(bb8Loc);
     //draw maze
     stack.push();
     //stack.multiply(scalem(width/Shapes.maze.mazegen.gridSize, 1, width/Shapes.maze.mazegen.gridSize));
@@ -196,7 +199,6 @@ function drawScene() {
     stack.pop();
 
     //stairs
-//    var stair_offset = ((Shapes.maze.mazegen.gridSize-1)/ -2) + Shapes.maze.mazegen.startRow;
     stack.push();
     stack.multiply(scalem(2, 1, 2));
     stack.multiply(translate(stair_offset, 0, 0)); //starts start at the finish of first maze
@@ -206,10 +208,7 @@ function drawScene() {
     Shapes.stair.drawSteps();
     stack.pop();
 
-    //level 2
-//    var offsetz = -(((Shapes.maze2.size+1)/2) + ((Shapes.maze.size+1)/2) + Shapes.stair.run);
-//    var offsetx = ((Shapes.maze2.mazegen.gridSize -1)/ -2) + Shapes.maze2.mazegen.startRow - stair_offset;
-    
+    //level 2    
     stack.push();
     
     stack.multiply(scalem(2,1,2));
