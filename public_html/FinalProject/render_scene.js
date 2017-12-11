@@ -2,7 +2,7 @@
  Elizabeth Reed and Ariel Todoki
  CS 445 Graphics
  Lab 8 (Final) - The A-Maze-ing Race
-
+ 
  */
 
 var canvas;       // HTML 5 canvas
@@ -23,6 +23,7 @@ var camera = new Camera();
 var stack = new MatrixStack();
 var light = new Lighting();
 var timer = new Timer();
+var hasTime = true;
 
 //Texture variables
 var checkerboard;
@@ -38,17 +39,17 @@ var lightAngle = 0;
 var program;
 
 // orthographic projection parameters
-var orthoL = -30;
-var orthoR = 30;
-var orthoB = -30;
-var orthoT = 30;
+var orthoL = -15;
+var orthoR = 15;
+var orthoB = -15;
+var orthoT = 15;
 
 var thetaR = 0;
-var bb8Loc = vec4(0, 1, 10,1);
+var bb8Loc = vec4(0, 1, 10, 1);
 
-var stair_offset = ((Shapes.maze.mazegen.gridSize-1)/ -2) + Shapes.maze.mazegen.startRow;
-var offsetz = -(((Shapes.maze2.size+1)/2) + ((Shapes.maze.size+1)/2) + Shapes.stair.run);
-var offsetx = ((Shapes.maze2.mazegen.gridSize -1)/ -2) + Shapes.maze2.mazegen.startRow - stair_offset;
+var stair_offset = ((Shapes.maze.mazegen.gridSize - 1) / -2) + Shapes.maze.mazegen.startRow;
+var offsetz = -(((Shapes.maze2.size + 1) / 2) + ((Shapes.maze.size + 1) / 2) + Shapes.stair.run);
+var offsetx = ((Shapes.maze2.mazegen.gridSize - 1) / -2) + Shapes.maze2.mazegen.startRow - stair_offset;
 
 window.onload = function init()
 {
@@ -133,12 +134,18 @@ function render()
 
     //Right half of viewport
 //    var position1 = lookAt(vec3(0, 20, 0), vec3(0, 0, 0), vec3(0, 0, -1)); //level one
-    var followPosition = lookAt(vec3(bb8Loc[0], bb8Loc[0] + 20, bb8Loc[2]-5), vec3(bb8Loc[0], 0, bb8Loc[2]-5), vec3(0, 0, -1));
-    
-    
+    var followPosition = lookAt(vec3(bb8Loc[0], bb8Loc[1] + 20, bb8Loc[2] - 7), vec3(bb8Loc[0], 0, bb8Loc[2] - 7), vec3(0, 0, -1));
+
+    if (bb8Loc[1] >= Shapes.stair.rise) {
+        orthoL = -30;
+        orthoR = 30;
+        orthoB = -30;
+        orthoT = 30;
+    }
+
     projMat = ortho(orthoL, orthoR, orthoB, orthoT, 1, 1000); //ortho(left,right,bottom,top,near,far)
     gl.uniformMatrix4fv(uProjection, false, flatten(projMat));
-    
+
 //    if(bb8Loc)
     viewMat = followPosition; // lookAt(eye,at,up)
     gl.viewport(canvas.width / 2, 0, canvas.width / 2, canvas.height);
@@ -153,14 +160,18 @@ function render1(vm) {
     gl.uniform4fv(uLight_position, newLightPos);
     /////////
     stack.clear();
- 
+
     stack.multiply(vm);
 
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    
-    console.log(timer.hasTime);
-    if(!timer.hasTime){ //when it runs out of time
+
+    console.log(hasTime);
+    if (!hasTime) { //when it runs out of time
         light.ka = 0;
+        light.kd = 0;
+        light.ks = 0;
+        light.shininess = 50.0;
+        light.setUp();
     }
     //draw scene
     stack.push();
@@ -172,7 +183,7 @@ function drawScene() {
     //bb8
     stack.push();
     var bb8 = new Bb8();
-    stack.multiply(translate(bb8Loc[0], bb8Loc[1]-0.75, bb8Loc[2]));
+    stack.multiply(translate(bb8Loc[0], bb8Loc[1] - 0.75, bb8Loc[2]));
     stack.multiply(scalem(0.1, 0.1, 0.1));
     bb8.drawBb8();
     stack.pop();
@@ -198,9 +209,9 @@ function drawScene() {
 
     //level 2    
     stack.push();
-    
-    stack.multiply(scalem(2,1,2));
-    stack.multiply(translate(-offsetx, Shapes.stair.rise-0.5, offsetz));
+
+    stack.multiply(scalem(2, 1, 2));
+    stack.multiply(translate(-offsetx, Shapes.stair.rise - 0.5, offsetz));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
     gl.uniform1i(uColorMode, 1);

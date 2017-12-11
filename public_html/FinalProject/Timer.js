@@ -13,7 +13,7 @@ function Timer() {
         totalTime -= 1;
         showTime = "Time: " + minutes + ":" + seconds;
 
-        this.hasTime = Boolean(totalTime > 0);
+        hasTime = Boolean(totalTime > 0);
 //        console.log(hasTime);
 
         if (minutes <= 0 && seconds <= 0) {
