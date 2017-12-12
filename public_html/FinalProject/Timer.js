@@ -2,7 +2,7 @@
 //timer for the A-maze-ing race
 
 function Timer() {
-    var minutes = 1;
+    var minutes = 5;
     var seconds = 0;
     var totalTime = minutes * 60;
     var showTime = "Time: " + minutes + ":" + seconds;

@@ -165,7 +165,7 @@ function render1(vm) {
 
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
 
-    console.log(hasTime);
+//    console.log(hasTime);
     if (!hasTime) { //when it runs out of time
         light.ka = 0;
         light.kd = 0;
