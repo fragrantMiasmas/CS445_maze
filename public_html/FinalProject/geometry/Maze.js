@@ -29,7 +29,7 @@ Maze.prototype.drawMaze = function () {
                 stack.multiply(translate(i - centerVal, 1.5, j - centerVal));
                 stack.multiply(scalem(1,3,1));
                 gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-                gl.uniform4fv(uColor, vec4(1, 0, 1, 1));
+                gl.uniform4fv(uColor, vec4(0, 102/255, 102/255, 1));
                 gl.uniform1i(uColorMode, 1);
                 Shapes.drawPrimitive(Shapes.cube);
                 stack.pop();
@@ -44,7 +44,7 @@ Maze.prototype.drawMaze = function () {
             stack.multiply(translate(i -1- centerVal, 1.5, -centerVal - 1));
             stack.multiply(scalem(1,3,1));
             gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-            gl.uniform4fv(uColor, vec4(1, 0, 0, 1));
+            gl.uniform4fv(uColor, vec4(211/255, 36/255, 6/255, 1));
             gl.uniform1i(uColorMode, 1);
             Shapes.drawPrimitive(Shapes.cube);
             stack.pop();
@@ -54,7 +54,7 @@ Maze.prototype.drawMaze = function () {
             stack.multiply(translate(i -1- centerVal, 1.5, centerVal+1));
             stack.multiply(scalem(1,3,1));
             gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-            gl.uniform4fv(uColor, vec4(1, 0, 0, 1));
+            gl.uniform4fv(uColor, vec4(211/255, 36/255, 6/255, 1));
             gl.uniform1i(uColorMode, 1);
             Shapes.drawPrimitive(Shapes.cube);
             stack.pop();
@@ -67,7 +67,7 @@ Maze.prototype.drawMaze = function () {
         stack.multiply(translate(-centerVal - 1, 1.5, i - centerVal));
         stack.multiply(scalem(1,3,1));
         gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-        gl.uniform4fv(uColor, vec4(1, 0, 0, 1));
+        gl.uniform4fv(uColor, vec4(211/255, 36/255, 6/255, 1));
         gl.uniform1i(uColorMode, 1);
         Shapes.drawPrimitive(Shapes.cube);
         stack.pop();
@@ -76,7 +76,7 @@ Maze.prototype.drawMaze = function () {
         stack.multiply(translate(centerVal +1, 1.5, i - centerVal));
         stack.multiply(scalem(1,3,1));
         gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-        gl.uniform4fv(uColor, vec4(1, 0, 0, 1));
+        gl.uniform4fv(uColor, vec4(211/255, 36/255, 6/255, 1));
         gl.uniform1i(uColorMode, 1);
         Shapes.drawPrimitive(Shapes.cube);
         stack.pop();
@@ -87,7 +87,7 @@ Maze.prototype.drawMaze = function () {
     stack.multiply(translate(0,0.1,0));
     stack.multiply(scalem(this.mazegen.gridSize+1, 0.2, this.mazegen.gridSize+1));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    gl.uniform4fv(uColor, vec4(0, 1, 0, 1));
+    gl.uniform4fv(uColor, vec4(1, 1, 1, 1));
     gl.uniform1i(uColorMode, 1);
     Shapes.drawPrimitive(Shapes.cube);
     stack.pop();
@@ -99,7 +99,7 @@ Maze.prototype.drawMaze = function () {
         stack.multiply(translate(0, 3, 0));
         stack.multiply(scalem(this.mazegen.gridSize + 1, 0.2, this.mazegen.gridSize + 1));
         gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-        gl.uniform4fv(uColor, vec4(0, 1, 0, 1));
+        gl.uniform4fv(uColor, vec4(1, 1, 1, 1));
         gl.uniform1i(uColorMode, 1);
         Shapes.drawPrimitive(Shapes.cube);
         stack.pop();

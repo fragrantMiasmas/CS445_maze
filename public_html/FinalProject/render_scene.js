@@ -51,6 +51,11 @@ var stair_offset = ((Shapes.maze.mazegen.gridSize - 1) / -2) + Shapes.maze.mazeg
 var offsetz = -(((Shapes.maze2.size + 1) / 2) + ((Shapes.maze.size + 1) / 2) + Shapes.stair.run);
 var offsetx = ((Shapes.maze2.mazegen.gridSize - 1) / -2) + Shapes.maze2.mazegen.startRow - stair_offset;
 
+//finish line z location
+var xEnd = offsetx;
+var yEnd = Shapes.stair.rise;
+var zEnd = 2*Shapes.maze.size + 2*Shapes.maze2.size + Shapes.stair.run;
+
 window.onload = function init()
 {
     //set Event Handlers
@@ -66,7 +71,7 @@ window.onload = function init()
     }
 
     gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.clearColor(0.309, 0.505, 0.74, 1.0);
+    gl.clearColor(0.361, 0.541, 0.541, 1.0);
 
     gl.enable(gl.DEPTH_TEST);
 
@@ -165,15 +170,22 @@ function render1(vm) {
 
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
 
-//    console.log(hasTime);
-    if (!hasTime) { //when it runs out of time
+    if (!hasTime) { //when it runs out of time, you lose
         light.ka = 0;
         light.kd = 0;
         light.ks = 0;
         light.shininess = 50.0;
         light.setUp();
     }
-    
+
+    //if you win
+    var onLevel2 = Math.round(bb8Loc[1]) <= Shapes.stair.rise; //hasn't reached level 2
+    var reachedEnd = Math.round(bb8Loc[0] / 2) == stair_offset && Math.round(-bb8Loc[2]) >= zEnd;
+    console.log("end = " + zEnd);
+
+    if (hasTime && onLevel2 && reachedEnd) { //if you win
+        //make lights bright
+    }
     //draw scene
     stack.push();
     drawScene();
@@ -218,4 +230,14 @@ function drawScene() {
     gl.uniform1i(uColorMode, 1);
     Shapes.maze2.drawMaze(); //need to change so that the two mazes are different
     stack.pop();
+    
+    //when you reach the end of level 2
+//    stack.push();
+//    stack.multiply(scalem(10, 10, 1));
+//    stack.multiply(translate(xEnd,0,-zEnd));
+//    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+//    gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
+//    gl.uniform1i(uColorMode, 1);
+//    Shapes.drawPrimitive(Shapes.cube);
+//    stack.pop();
 }
