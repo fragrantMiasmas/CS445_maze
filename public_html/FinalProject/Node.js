@@ -1,7 +1,13 @@
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Ariel Todoki
+ * CS 445 Graphics
+ * Lab 8 (Final)
+ * The A-maze-ing Race
+ * 
+ * Node is used as a cell in a 2D array that says whether or not there is a wall
+ * or not in its spot
+ * 
+ * Node.js is used in MazeGen.js
  */
 function Node(nR, nC){
     this.row = nR;
@@ -17,9 +23,7 @@ function Node(nR, nC){
     
     this.path = 0;
     this.visit = 0;
-    
-    
-    //this.priority = pri;
+
 }
 
 Node.prototype.getRow = function(){

@@ -1,5 +1,8 @@
 /*
- Programmed by Daniel Koenig and Ariel Todoki for Lab 4 in Professor Orr's CSS-445 Computer Graphics Course
+ Elizabeth Reed and Ariel Todoki
+CS 445 Graphics
+Lab 8 (Final)
+The A-Maze-ing Race
  */
 
 /**
@@ -235,7 +238,7 @@ Camera.prototype.keyAction = function (key) {
             break;
         case 'Q':  // move forward
            tempLoc = subtract(this.eye, mult(vec4(1.75, 1.75, 1.75, 0), this.viewRotation[2]));
-            var collision1 = collision.detect(tempLoc[0],tempLoc[2],0,0, maze);
+            var collision1 = collision.detect(tempLoc[0],tempLoc[2],0,0, maze) && bb8Loc[1]<Shapes.stair.rise;
             var collision2 = collision.detect(tempLoc[0],tempLoc[2],offsetx, offsetz,maze2)&& bb8Loc[1]>=Shapes.stair.rise;
             
             if(!collision1 && !collision2 && hasTime){ //&& timer.hasTime

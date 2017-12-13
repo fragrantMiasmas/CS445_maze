@@ -1,7 +1,10 @@
 /* 
  * Ariel Todoki
+ * CS 445 Graphics
+ * Lab 8 (Final)
+ * The A-maze-ing Race
  * 
- * Creates a 2D array that represents a maze
+ * Creates a 2D array of nodes that represents a maze
  * References Node.js class
  * 
  * 0 represents a wall
@@ -10,7 +13,7 @@
 function MazeGen(s) {
     this.gridSize = this.setup(s);
     this.makeMaze();
-    this.print();
+    //this.print();
 }
 
 MazeGen.prototype.setup = function (s) {
