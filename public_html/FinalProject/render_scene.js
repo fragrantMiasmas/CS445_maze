@@ -54,14 +54,13 @@ var offsetx = ((Shapes.maze2.mazegen.gridSize - 1) / -2) + Shapes.maze2.mazegen.
 //finish line z location
 var xEnd = offsetx;
 var yEnd = Shapes.stair.rise;
-var zEnd = 2*Shapes.maze.size + 2*Shapes.maze2.size + Shapes.stair.run;
+var zEnd = 2*(Shapes.maze.size +1) + 2*(Shapes.maze2.size+1) + Shapes.stair.run;
 
 window.onload = function init()
 {
     //set Event Handlers
     setKeyEventHandler();
     setMouseEventHandler();
-//    rotY();
 
     canvas = document.getElementById("gl-canvas");
 
@@ -179,12 +178,19 @@ function render1(vm) {
     }
 
     //if you win
-    var onLevel2 = Math.round(bb8Loc[1]) <= Shapes.stair.rise; //hasn't reached level 2
-    var reachedEnd = Math.round(bb8Loc[0] / 2) == stair_offset && Math.round(-bb8Loc[2]) >= zEnd;
-    console.log("end = " + zEnd);
+    var onLevel2 = Math.round(bb8Loc[1]) >= Shapes.stair.rise; //has reached level 2
+//    var solved2 = Math.round(bb8Loc[0] / 2) == stair_offset && Math.round(-bb8Loc[2]) > zEnd;
+    var solved2 = Math.round(-bb8Loc[2]) > zEnd + 0.5;
+    var reachedEnd = onLevel2 && solved2;
+//    console.log("end = " + xEnd + "," + yEnd + ", " + zEnd);
+    console.log(reachedEnd);
 
-    if (hasTime && onLevel2 && reachedEnd) { //if you win
+    if (hasTime && reachedEnd) { //if you win
         //make lights bright
+        light.ka = 1;
+        light.ka = 1;
+        light.ks = 1;
+        light.setUp();
     }
     //draw scene
     stack.push();
@@ -234,7 +240,7 @@ function drawScene() {
     //when you reach the end of level 2
 //    stack.push();
 //    stack.multiply(scalem(10, 10, 1));
-//    stack.multiply(translate(xEnd,0,-zEnd));
+//    stack.multiply(translate(xEnd,yEnd,-zEnd + 1));
 //    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
 //    gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
 //    gl.uniform1i(uColorMode, 1);
