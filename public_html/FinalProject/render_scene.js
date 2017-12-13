@@ -86,7 +86,6 @@ window.onload = function init()
     bodyTexture2 = new ImageTexture("textures/bbb81.png"); //body
     stripes = new Stripes();
 
-    //light.positionY(0);
     light.movePos(bb8Loc);
     light.setUp();
 
@@ -176,12 +175,13 @@ function render1(vm) {
         light.ks = 0;
         light.shininess = 50.0;
         light.setUp();
+        document.getElementById("status").innerHTML = "Status: Game Over";
     }
 
     //if you win
     var onLevel2 = Math.round(bb8Loc[1]) >= Shapes.stair.rise; //has reached level 2
 //    var solved2 = Math.round(bb8Loc[0] / 2) == stair_offset && Math.round(-bb8Loc[2]) > zEnd;
-    var solved2 = Math.round(-bb8Loc[2]) > zEnd + 0.5;
+    var solved2 = -bb8Loc[2] > zEnd + 0.5;
     var reachedEnd = onLevel2 && solved2;
 //    console.log("end = " + xEnd + "," + yEnd + ", " + zEnd);
     console.log(reachedEnd);
@@ -192,6 +192,7 @@ function render1(vm) {
         light.ka = 1;
         light.ks = 1;
         light.setUp();
+        document.getElementById("status").innerHTML = "Status: You Win";
     }
     //draw scene
     stack.push();
@@ -238,12 +239,12 @@ function drawScene() {
     stack.pop();
 
     //when you reach the end of level 2
-//    stack.push();
-//    stack.multiply(scalem(10, 10, 1));
-//    stack.multiply(translate(xEnd,yEnd,-zEnd + 1));
-//    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-//    gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
-//    gl.uniform1i(uColorMode, 1);
-//    Shapes.drawPrimitive(Shapes.cube);
-//    stack.pop();
+    stack.push();
+    stack.multiply(scalem(1, 5, 1));
+    stack.multiply(translate(stair_offset,1,-zEnd - 2));
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    gl.uniform4fv(uColor, vec4(0, 0, 1, 1));
+    gl.uniform1i(uColorMode, 0);
+    Shapes.drawPrimitive(Shapes.cone);
+    stack.pop();
 }
