@@ -9,9 +9,9 @@ function collisionDetect(){
     
 }
 
-collisionDetect.prototype.detect = function(xLoc, zLoc, maze){
-    this.x = Math.floor(xLoc + (maze.size - 1));
-    this.z = Math.floor(zLoc + (maze.size - 1));
+collisionDetect.prototype.detect = function(xLoc, zLoc, transx, transz, maze){
+    this.x = Math.floor(xLoc + (maze.size - 1) + transx);
+    this.z = Math.floor(zLoc + (maze.size - 1) + transz);
 //    console.log("xLoc" + xLoc);
 //    console.log("yLoc" + zLoc);
 //    console.log(this.x);
@@ -34,7 +34,7 @@ collisionDetect.prototype.detect = function(xLoc, zLoc, maze){
     console.log(this.gridZ);
     console.log(this.gridX);
     
-    if(this.gridZ <= maze.size-1 && this.gridZ >= 0 && this.gridX <= maze.size-1 && this.gridX >= 0){
+    if(this.gridZ <= maze.size-1 + transz && this.gridZ >= 0 && this.gridX <= maze.size-1+transx && this.gridX >= 0){
     console.log(maze.mazegen.grid[this.gridX][this.gridZ].isPath() === 0);
     return maze.mazegen.grid[this.gridX][this.gridZ].isPath() === 0; //true if there is a wall
     }

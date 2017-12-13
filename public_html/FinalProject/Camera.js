@@ -166,6 +166,7 @@ Camera.prototype.tumble = function (rx, ry) {
 
 Camera.prototype.keyAction = function (key) {
     var maze = Shapes.maze;
+    var maze2 = Shapes.maze2;
     var collision = new collisionDetect();
     var alpha = 8.0;  // used to control the amount of a turn during the flythrough
     
@@ -234,9 +235,12 @@ Camera.prototype.keyAction = function (key) {
             break;
         case 'Q':  // move forward
            tempLoc = subtract(this.eye, mult(vec4(1.75, 1.75, 1.75, 0), this.viewRotation[2]));
-            if(!collision.detect(tempLoc[0],tempLoc[2],maze) && hasTime){ //&& timer.hasTime
+            var collision1 = collision.detect(tempLoc[0],tempLoc[2],0,0, maze);
+            var collision2 = collision.detect(tempLoc[0],tempLoc[2],offsetx, offsetz,maze2)&& bb8Loc[1]>=Shapes.stair.rise;
+            
+            if(!collision1 && !collision2 && hasTime){ //&& timer.hasTime
             console.log(hasTime);
-                console.log("move forward");
+            console.log("move forward");
             this.eye = subtract(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2])); //subtract the n vector from eye position.
             bb8Loc = subtract(this.eye, mult(vec4(1, 1, 1, 0), this.viewRotation[2]));
             light.movePos(bb8Loc);
@@ -260,7 +264,10 @@ Camera.prototype.keyAction = function (key) {
 
         case 'A':  //  move backward
             backLoc = add(this.eye, mult(vec4(-0.5, -0.5, -0.5, 0), this.viewRotation[2]));
-            if(!collision.detect(backLoc[0],backLoc[2],maze) && hasTime){ //&& timer.hasTime
+            collision1 = collision.detect(backLoc[0],backLoc[2],0,0, maze);
+            collision2 = collision.detect(backLoc[0],backLoc[2],offsetx, offsetz, maze2) && bb8Loc[1]>=Shapes.stair.rise;
+            
+            if(!collision1 && !collision2 && hasTime){ //&& timer.hasTime
             console.log("move backward");
             this.eye = add(this.eye, mult(vec4(0.2, 0.2, 0.2, 0), this.viewRotation[2])); //subtract the n vector from eye position.
             bb8Loc = add(this.eye, mult(vec4(-1, -1, -1, 0), this.viewRotation[2]));
@@ -282,12 +289,6 @@ Camera.prototype.keyAction = function (key) {
 //            light.movePos(bb8Loc);
 //            
 //            thetaX -= 5; 
-
-            break;
-//        case 'N':  // move object backward
-//            thetaX += 5; //pedal rotation
-//            distance += 0.5;
-////           stack.multiply(translate(0, 0, distance));
 //            break;
 
     }
