@@ -289,7 +289,6 @@ Camera.prototype.keyAction = function (key) {
 //            light.movePos(bb8Loc);
 //            
 //            thetaX -= 5; 
-//            break;
 
     }
 };

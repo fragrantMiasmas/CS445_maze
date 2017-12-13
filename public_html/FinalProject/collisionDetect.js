@@ -10,8 +10,10 @@ function collisionDetect(){
 }
 
 collisionDetect.prototype.detect = function(xLoc, zLoc, transx, transz, maze){
-    this.x = Math.floor(xLoc + (maze.size - 1) + transx);
-    this.z = Math.floor(zLoc + (maze.size - 1) + transz);
+
+    this.x = Math.floor(xLoc + (maze.size - 1)+ (2*transx));
+    this.z = Math.floor(zLoc + (maze.size - 1)- (2*transz));
+
 //    console.log("xLoc" + xLoc);
 //    console.log("yLoc" + zLoc);
 //    console.log(this.x);
@@ -31,8 +33,8 @@ collisionDetect.prototype.detect = function(xLoc, zLoc, transx, transz, maze){
         this.gridZ = this.z/2;
     }
     
-    console.log(this.gridZ);
-    console.log(this.gridX);
+    console.log("gridz" + this.gridZ);
+    console.log("gridx" + this.gridX);
     
     if(this.gridZ <= maze.size-1 + transz && this.gridZ >= 0 && this.gridX <= maze.size-1+transx && this.gridX >= 0){
     console.log(maze.mazegen.grid[this.gridX][this.gridZ].isPath() === 0);
