@@ -36,7 +36,7 @@ collisionDetect.prototype.detect = function(xLoc, zLoc, transx, transz, maze){
     console.log("gridz" + this.gridZ);
     console.log("gridx" + this.gridX);
     
-    if(this.gridZ <= maze.size-1 + transz && this.gridZ >= 0 && this.gridX <= maze.size-1+transx && this.gridX >= 0){
+    if(this.gridZ <= maze.size-1 && this.gridZ >= 0 && this.gridX <= maze.size-1 && this.gridX >= 0){
     console.log(maze.mazegen.grid[this.gridX][this.gridZ].isPath() === 0);
     return maze.mazegen.grid[this.gridX][this.gridZ].isPath() === 0; //true if there is a wall
     }
