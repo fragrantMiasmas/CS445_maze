@@ -90,43 +90,43 @@ Camera.prototype.calcProjectionMat = function () {
  * @return none
  */
 Camera.prototype.motion = function () {
-
-    switch (mouseState.action) {
-        case mouseState.actionChoice.TUMBLE:  // left mouse button
-            // amount of rotation around axes 
-            var dy = -0.05 * mouseState.delx;  // angle around y due to mouse drag along x
-            var dx = -0.05 * mouseState.dely;  // angle around x due to mouse drag along y
-
-            var ry = rotateY(10 * dy);  // rotation matrix around y
-            var rx = rotateX(10 * dx);  // rotation matrix around x
-
-            this.tumble(rx, ry);
-            mouseState.startx = mouseState.x;
-            mouseState.starty = mouseState.y;
-            break;
-        case mouseState.actionChoice.TRACK:  // PAN   - right mouse button
-            var dx = -0.05 * mouseState.delx; // amount to pan along x
-            var dy = 0.05 * mouseState.dely;  // amount to pan along y
-            ////scale the change in x by the u-vector to orient change in the camera's current x-axis, 
-            //and scale the change in y by the v-vector to orient change in the camera's current y-axis, 
-            //then add both changes together and add the resulting vector to the current eye position. 
-            this.eye = add(this.eye, add(scale(dx, this.viewRotation[0]), scale(dy, this.viewRotation[1])));
-            mouseState.startx = mouseState.x;
-            mouseState.starty = mouseState.y;
-            break;
-        case mouseState.actionChoice.DOLLY:   // middle mouse button
-            var dx = 0.05 * mouseState.delx;  // amount to move backward/forward
-            var dy = 0.05 * mouseState.dely;
-            ////scale the change in X & Y by the n-vector to orient the change in the camera's current z, 
-            //then add the result to the current eye position. 
-            this.eye = add(this.eye, scale((-dx + -dy), this.viewRotation[2])); //negate dx and dy for more natural movement
-            mouseState.startx = mouseState.x;
-            mouseState.starty = mouseState.y;
-            break;
-        default:
-            console.log("unknown action: " + mouseState.action);
-    }
-    render();
+//
+//    switch (mouseState.action) {
+//        case mouseState.actionChoice.TUMBLE:  // left mouse button
+//            // amount of rotation around axes 
+//            var dy = -0.05 * mouseState.delx;  // angle around y due to mouse drag along x
+//            var dx = -0.05 * mouseState.dely;  // angle around x due to mouse drag along y
+//
+//            var ry = rotateY(10 * dy);  // rotation matrix around y
+//            var rx = rotateX(10 * dx);  // rotation matrix around x
+//
+//            this.tumble(rx, ry);
+//            mouseState.startx = mouseState.x;
+//            mouseState.starty = mouseState.y;
+//            break;
+//        case mouseState.actionChoice.TRACK:  // PAN   - right mouse button
+//            var dx = -0.05 * mouseState.delx; // amount to pan along x
+//            var dy = 0.05 * mouseState.dely;  // amount to pan along y
+//            ////scale the change in x by the u-vector to orient change in the camera's current x-axis, 
+//            //and scale the change in y by the v-vector to orient change in the camera's current y-axis, 
+//            //then add both changes together and add the resulting vector to the current eye position. 
+//            this.eye = add(this.eye, add(scale(dx, this.viewRotation[0]), scale(dy, this.viewRotation[1])));
+//            mouseState.startx = mouseState.x;
+//            mouseState.starty = mouseState.y;
+//            break;
+//        case mouseState.actionChoice.DOLLY:   // middle mouse button
+//            var dx = 0.05 * mouseState.delx;  // amount to move backward/forward
+//            var dy = 0.05 * mouseState.dely;
+//            ////scale the change in X & Y by the n-vector to orient the change in the camera's current z, 
+//            //then add the result to the current eye position. 
+//            this.eye = add(this.eye, scale((-dx + -dy), this.viewRotation[2])); //negate dx and dy for more natural movement
+//            mouseState.startx = mouseState.x;
+//            mouseState.starty = mouseState.y;
+//            break;
+//        default:
+//            console.log("unknown action: " + mouseState.action);
+//    }
+//    render();
 };
 
 /**
