@@ -2,7 +2,15 @@
  Elizabeth Reed and Ariel Todoki
  CS 445 Graphics
  Lab 8 (Final) - The A-Maze-ing Race
+Due: December 14, 2017
  
+ 3D game in which the user controls Bb8 to navigate through a series of 2 mazes,
+the second being bigger (and therefore more difficult) than the first. The mazes
+are connected by stairs, and the user has 6 minutes to complete them both.
+There is an option to use the birds eye view (easy) or not.
+
+The mazes are procedurally generated using the recursive backtracking algorithm
+and are different everytime you refresh the page.
  */
 
 var canvas;       // HTML 5 canvas

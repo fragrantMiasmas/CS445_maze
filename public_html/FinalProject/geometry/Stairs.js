@@ -1,3 +1,12 @@
+/* 
+ * Elizabeth Reed
+ * CS445 Graphics
+ * Lab 8 Final
+ * Th A-maze-ing Race
+ * 
+ * Draws stairs in the scene
+ */
+
 function Stairs(){
     this.name = "Stairs";
 //    this.location = MazeGen.startRow; //change later
