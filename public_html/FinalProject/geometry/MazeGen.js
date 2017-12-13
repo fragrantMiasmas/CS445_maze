@@ -5,6 +5,7 @@
  * The A-maze-ing Race
  * 
  * Creates a 2D array of nodes that represents a maze
+ * Uses recursive backtracking algorithm
  * References Node.js class
  * 
  * 0 represents a wall
@@ -40,7 +41,7 @@ MazeGen.prototype.makeMaze = function () {
     }
 
     //pick random starting node along one side
-    this.startRow = Math.floor(Math.random()*this.gridSize);
+    this.startRow = Math.floor(Math.random() * this.gridSize);
     this.startCol = 0;
 
     var startNode = this.grid[this.startRow][this.startCol];
@@ -93,9 +94,6 @@ MazeGen.prototype.recursive = function (currNode) {
             numNodes++;
         }
     }
-
-//    console.log("num Nodes" + numNodes);
-//    console.log("currNumNodes" + currNumNodes);
 
     var topNode;
     var rightNode;

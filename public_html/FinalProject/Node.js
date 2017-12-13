@@ -10,15 +10,13 @@
  * Node.js is used in MazeGen.js
  */
 function Node(nR, nC){
-    this.row = nR;
-    this.col = nC;
+    this.row = nR; // row index of the node
+    this.col = nC; // column index of the node
     
+    // indeces of adjacent nodes
     this.topRow = nR-2;
-    
     this.rightCol = nC +2;
-    
     this.botRow = nR+2;
-    
     this.leftCol = nC-2;
     
     this.path = 0;

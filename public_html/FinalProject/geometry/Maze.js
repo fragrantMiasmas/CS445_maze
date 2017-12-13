@@ -17,7 +17,6 @@ function Maze(s) {
         this.size = s;
     }
     this.mazegen = new MazeGen(this.size);
-    //this.width = 15; //so that it stays within camera space
 }
 
 Maze.prototype.drawMaze = function () {

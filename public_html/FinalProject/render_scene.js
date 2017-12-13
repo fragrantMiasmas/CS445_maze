@@ -54,7 +54,7 @@ var offsetx = ((Shapes.maze2.mazegen.gridSize - 1) / -2) + Shapes.maze2.mazegen.
 //finish line z location
 var xEnd = offsetx;
 var yEnd = Shapes.stair.rise;
-var zEnd = 2*(Shapes.maze.size +1) + 2*(Shapes.maze2.size+1) + Shapes.stair.run;
+var zEnd = 2 * (Shapes.maze.size + 1) + 2 * (Shapes.maze2.size + 1) + Shapes.stair.run;
 
 window.onload = function init()
 {
@@ -136,10 +136,11 @@ function render()
     gl.viewport(0, 0, canvas.width / 2, canvas.height); //x,y,width,height
     render1(viewMat);
 
-    //Right half of viewport
+    // Right half of viewport
 //    var position1 = lookAt(vec3(0, 20, 0), vec3(0, 0, 0), vec3(0, 0, -1)); //level one
     var followPosition = lookAt(vec3(bb8Loc[0], bb8Loc[1] + 20, bb8Loc[2] - 7), vec3(bb8Loc[0], 0, bb8Loc[2] - 7), vec3(0, 0, -1));
 
+    // Change orthogonal view parameters for maze2
     if (bb8Loc[1] >= Shapes.stair.rise) {
         orthoL = -30;
         orthoR = 30;
@@ -228,7 +229,6 @@ function drawScene() {
 
     //level 2    
     stack.push();
-
     stack.multiply(scalem(2, 1, 2));
     stack.multiply(translate(-offsetx, Shapes.stair.rise - 0.5, offsetz));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
@@ -236,7 +236,7 @@ function drawScene() {
     gl.uniform1i(uColorMode, 1);
     Shapes.maze2.drawMaze(); //need to change so that the two mazes are different
     stack.pop();
-    
+
     //when you reach the end of level 2
 //    stack.push();
 //    stack.multiply(scalem(10, 10, 1));

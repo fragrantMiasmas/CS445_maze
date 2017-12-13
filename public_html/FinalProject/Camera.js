@@ -220,22 +220,22 @@ Camera.prototype.keyAction = function (key) {
             //pull out the eye coords from eye_negated and negate them to make them positive.
             this.eye = vec4(-1 * eye_negated[0][3], -1 * eye_negated[1][3], -1 * eye_negated[2][3], 1);
             break;
-        case 'S':  // turn up   
-            console.log(" turn up");
-            this.viewRotation = mult(rotateX(alpha), this.viewRotation);
-            break;
-        case 'D':  // turn down
-            console.log("turn down");
-            this.viewRotation = mult(rotateX(-alpha), this.viewRotation);
-            break;
-        case 'X':  // bank right 
-            console.log("bank right");
-            this.viewRotation = mult(rotateZ(-alpha), this.viewRotation);
-            break;
-        case 'C':  // bank left
-            console.log("bank left");
-            this.viewRotation = mult(rotateZ(alpha), this.viewRotation);
-            break;
+//        case 'S':  // turn up   
+//            console.log(" turn up");
+//            this.viewRotation = mult(rotateX(alpha), this.viewRotation);
+//            break;
+//        case 'D':  // turn down
+//            console.log("turn down");
+//            this.viewRotation = mult(rotateX(-alpha), this.viewRotation);
+//            break;
+//        case 'X':  // bank right 
+//            console.log("bank right");
+//            this.viewRotation = mult(rotateZ(-alpha), this.viewRotation);
+//            break;
+//        case 'C':  // bank left
+//            console.log("bank left");
+//            this.viewRotation = mult(rotateZ(alpha), this.viewRotation);
+//            break;
         case 'Q':  // move forward
            tempLoc = subtract(this.eye, mult(vec4(1.75, 1.75, 1.75, 0), this.viewRotation[2]));
             var collision1 = collision.detect(tempLoc[0],tempLoc[2],0,0, maze) && bb8Loc[1]<Shapes.stair.rise;
@@ -267,7 +267,7 @@ Camera.prototype.keyAction = function (key) {
 
         case 'A':  //  move backward
             backLoc = add(this.eye, mult(vec4(-0.5, -0.5, -0.5, 0), this.viewRotation[2]));
-            collision1 = collision.detect(backLoc[0],backLoc[2],0,0, maze);
+            collision1 = collision.detect(backLoc[0],backLoc[2],0,0, maze) && bb8Loc[1]<Shapes.stair.rise;
             collision2 = collision.detect(backLoc[0],backLoc[2],offsetx, offsetz, maze2) && bb8Loc[1]>=Shapes.stair.rise;
             
             if(!collision1 && !collision2 && hasTime){ //&& timer.hasTime
